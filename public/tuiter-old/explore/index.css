@@ -1,0 +1,167 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+}
+
+#column1 {
+    width: 10%;
+    padding-left: 10px;
+}
+
+#column2 {
+    width: 80%;
+    border: 1px solid rgb(236, 236, 236);
+}
+
+.wd-search-header {
+    display: flex;
+    margin: 10px;
+}
+
+.wd-search-container {
+    display: flex;
+    align-items: center;
+    background-color: rgb(235, 235, 235);
+    border-radius: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 88%;
+}
+
+.wd-search-icon {
+    margin-right: 5px;
+    width: 2%;
+    float: left;
+}
+
+.wd-search-input {
+    display: flex;
+    margin-left: 10px;
+    width: 98%;
+    float: right;
+}
+
+.wd-search-input input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 120%;
+}
+
+.wd-search-setting {
+    width: auto;
+    margin: auto;
+}
+
+.wd-search-setting i {
+    margin-left: 70%;
+}
+
+.wd-tab-container {
+    display: flex;
+    border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.wd-tab-list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 30px 1px 30px;
+    padding: 0;
+}
+
+.wd-tab {
+    list-style-type: none;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    font-size: 130%;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.wd-tab a {
+    text-decoration: none;
+    color: rgb(118, 117, 117);
+}
+
+.wd-tab-selected {
+    border-bottom: 3px solid rgb(29, 161, 242);
+}
+
+.wd-tab-selected a {
+    color: black !important;
+    font-weight: bold;
+}
+
+.wd-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.wd-image-container img {
+    flex-shrink: 0;
+    width: 100%;
+    height: 600px;
+}
+
+.wd-bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    color: white;
+    font: bolder 500% Helvetica, sans-serif;
+}
+
+.wd-list-container ul {
+    list-style-type: none;
+    padding-left: 20px;
+    font-size: 140%;
+}
+
+.wd-list-container .sub-title {
+    color: rgb(147, 145, 145);
+    margin-bottom: 10px;
+}
+
+.wd-list-container .title {
+    margin-bottom: 10px;
+}
+
+.wd-list-container .title-version {
+    color: rgb(147, 145, 145);
+}
+
+.wd-list-container .tweet {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.wd-list-container .tweet-info {
+    width: 95%;
+}
+
+#image1 {
+    width: 48px;
+    height: 48px;
+}
+
+.dotcolor {
+    color: rgb(154, 152, 152);
+}
