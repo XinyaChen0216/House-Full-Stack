@@ -1,0 +1,17 @@
+[
+    {
+        "_id": 123,
+        "address": "278 Harrington Ave SE",
+        "city": "Renton",
+        "state": "WA",
+        "price": 1000000,
+        "type": "single family",
+        "size": 3000,
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "builtYear": 2003,
+        "status": "avtive",
+        "images": ["SpaceX.png"],
+        "overview": "pretty nice house"
+    }
+]
