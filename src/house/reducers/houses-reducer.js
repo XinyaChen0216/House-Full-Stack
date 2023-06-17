@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import houses from "./houses.json";
+import Fuse from "fuse.js";
 // import { updateTuitThunk, createTuitThunk, deleteTuitThunk, findTuitsThunk } from "../services/tuits-thunks";
 const initialState = {
   houses: houses,
@@ -56,12 +57,29 @@ const housesSlice = createSlice({
     //         state.tuits[index].likes++;
     //     } else state.tuits[index].likes--;
     // },
-    // deleteTuit(state, action) {
-    //     const index = state.tuits
-    //         .findIndex(tuit =>
-    //             tuit._id === action.payload);
-    //     state.tuits.splice(index, 1);
-    // },
+    deleteHouse(state, action) {
+      const index = state.houses.findIndex(
+        (house) => house._id === action.payload
+      );
+      state.houses.splice(index, 1);
+    },
+    searchHouse(state, action) {
+      const options = {
+        includeScore: true,
+        keys: ["address", "city", "state"],
+      };
+
+      const fuse = new Fuse(state.houses, options);
+      const searchResult  = fuse.search(action.payload);
+      if (searchResult.length === 0 ) state.houses = [];
+      else {
+        let tempRes = [];
+        searchResult.forEach(res =>{
+          tempRes.push(state.houses[res.refIndex]);
+        });
+        state.houses = tempRes;
+      }
+    },
     // createTuit(state, action) {
     //     state.tuits.unshift({
     //         ...action.payload,
@@ -71,5 +89,5 @@ const housesSlice = createSlice({
     // }
   },
 });
-export const { createTuit, deleteTuit, updateLike } = housesSlice.actions;
+export const { deleteHouse, searchHouse } = housesSlice.actions;
 export default housesSlice.reducer;

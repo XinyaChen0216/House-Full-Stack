@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
+import { searchHouse } from "../reducers/houses-reducer";
 
 const Search = () => {
   let [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const searchHandler = () => {
-    // dispatch(createTuitThunk(newTuit));
-    setSearch("");
+    dispatch(searchHouse(search));
   };
   return (
     <div className="row mb-4">
@@ -16,13 +16,13 @@ const Search = () => {
           type="text"
           className="form-control"
           value={search}
-          placeholder="Enter an address, neighborhood, city, or ZIP code"
+          placeholder="Enter an address, neighborhood, city"
           onChange={(event) => setSearch(event.target.value)}
         />
         <div className="input-group-append">
           <button
             className="btn btn-primary"
-            style={{ "border-radius": 0 }}
+            style={{ "borderRadius": 0 }}
             type="button"
             onClick={searchHandler}
           >

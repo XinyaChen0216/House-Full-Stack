@@ -13,5 +13,35 @@
         "status": "avtive",
         "images": ["SpaceX.png"],
         "overview": "pretty nice house"
+    },
+    {
+        "_id": 234,
+        "address": "17071 woodside dr se",
+        "city": "Renton",
+        "state": "WA",
+        "price": 800000,
+        "type": "single family",
+        "size": 2000,
+        "bedrooms": 3,
+        "bathrooms": 1.5,
+        "builtYear": 2002,
+        "status": "avtive",
+        "images": ["SpaceX.png"],
+        "overview": "it is ok nice house"
+    },
+    {
+        "_id": 345,
+        "address": "1413 aberdeen ave se",
+        "city": "Renton",
+        "state": "WA",
+        "price": 1500000,
+        "type": "single family",
+        "size": 4000,
+        "bedrooms": 5,
+        "bathrooms": 3,
+        "builtYear": 2007,
+        "status": "avtive",
+        "images": ["SpaceX.png"],
+        "overview": "damn pretty nice house"
     }
 ]
