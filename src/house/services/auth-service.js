@@ -21,11 +21,19 @@ export const updateUser = async (user) => {
     const response = await api.put(`${USERS_URL}/${user._id}`, user);
     return response.data;
 };
-export const register = async ({ username, password }) => {
-    const response = await api.post(`${USERS_URL}/register`, {
-        _id: (new Date()).getTime().toString(),
+export const register = async ({ username, password, email, role }) => {
+    console.log({
         username: username,
-        password: password
+        password: password,
+        email: email,
+        role: role
+    })
+    console.log(`${USERS_URL}/register`)
+    const response = await api.post(`${USERS_URL}/register`, {
+        username: username,
+        password: password,
+        email: email,
+        role: role
     })
     return response.data;
 }

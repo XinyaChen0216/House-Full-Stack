@@ -40,7 +40,7 @@ function House() {
                             <Route path="/more" element={<More />} />
                             <Route path="/login" element={<LoginScreen />} />
                             <Route path="/register" element={<RegisterScreen />} />
-                            <Route path="/profile" element={<ProfileScreen />} />
+                            {/* <Route path="/profile" element={<ProfileScreen />} /> */}
 
                         </Routes>
                     </div>
