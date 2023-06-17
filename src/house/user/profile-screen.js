@@ -51,7 +51,7 @@ function ProfileScreen() {
       <button
         onClick={async() => {
           await dispatch(logoutThunk());
-          navigate("/tuiter/login");
+          navigate("/house/login");
         }}
       >
         {" "}

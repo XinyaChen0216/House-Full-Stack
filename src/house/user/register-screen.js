@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../services/auth-thunks";
-import { getRoles } from "@testing-library/react";
+
 function RegisterScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ function RegisterScreen() {
     const handleRegister = async () => {
         try {
             await dispatch(registerThunk({ username, password, email, role }));
-            navigate("/tuiter/profile");
+            navigate("/house/profile");
         } catch (e) {
             alert(e);
         }
@@ -39,18 +39,20 @@ function RegisterScreen() {
         </div>
 
         <div>
-            <p>Please choose your role</p>
+            <p className="mt-3 mb-1">Please choose your role</p>
             <div>
                 <div>
-                    <input type="radio" id="buyer" name="role" value={role} onChange={(event) => setRole(event.target.value)} />
-                    <label for="buyer">Buyer</label>
+                    <input type="radio" id="buyer" name="role" value="buyer" onClick={(event) => setRole(event.target.value)} />
+                    <label for="buyer" className="mb-2">Buyer</label>
                 </div>
                 <div>
-                    <input type="radio" id="seller" name="role" value={role} onChange={(event) => setRole(event.target.value)} />
-                    <label for="seller">Seller</label>
+                    <input type="radio" id="seller" name="role" value="seller" onClick={(event) => setRole(event.target.value)} />
+                    <label for="seller" className="mb-2">Seller</label>
                 </div>
-                <input type="radio" id="agent" name="role" checked value={role} onChange={(event) => setRole(event.target.value)} />
-                <label for="agent">Agent</label>
+                <div>
+                    <input type="radio" id="agent" name="role" value="agent" onClick={(event) => setRole(event.target.value)} />
+                    <label for="agent" className="mb-2">Agent</label>
+                </div>
             </div>
         </div>
 
