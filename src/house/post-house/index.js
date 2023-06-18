@@ -65,14 +65,29 @@ const PostHouse = () => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                values = {...values, agent: currentUser._id}
+                let formData = new FormData();
+                formData.append("file", values.images);
+                // need api support here @vincentli1994
+                let images = [];
+                for (const image of values.images) {
+                  images.push(image.name);
+                }
+                values.images = images;
+                values = { ...values, agent: currentUser._id };
                 dispatch(createHousePost(values));
                 setSubmitting(false);
                 handleClose();
               }, 400);
             }}
           >
-            {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
+            {({
+              handleSubmit,
+              handleChange,
+              values,
+              errors,
+              isSubmitting,
+              setFieldValue,
+            }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Row className="mb-3">
                   <Form.Group
@@ -291,12 +306,15 @@ const PostHouse = () => {
                   </Form.Group>
                 </Row>
                 <Form.Group className="position-relative mb-3">
-                  <Form.Label>Images</Form.Label>
+                  <Form.Label>Images (Support Multiple Images)</Form.Label>
                   <Form.Control
                     type="file"
                     required
                     name="images"
-                    onChange={handleChange}
+                    multiple
+                    onChange={(event) => {
+                      setFieldValue("images", event.currentTarget.files);
+                    }}
                     isInvalid={!!errors.images}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
