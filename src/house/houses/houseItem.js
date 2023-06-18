@@ -22,7 +22,7 @@ const HouseItem = ({ house }) => {
     <>
       <li
         className="list-group-item border border-0 p-0 pb-1 pe-1"
-        style={{ maxWidth: "19rem" }}
+        style={{ width: "19rem" }}
       >
         <div className="card" onClick={() => setModalShow(true)}>
           <div className="">
@@ -48,7 +48,7 @@ const HouseItem = ({ house }) => {
             <h5 className="card-title">Price: ${house.price}</h5>
             <div className="card-text">
               <p className="mb-0">
-                {house.address}, {house.city}, {house.state}
+                {house.address}, {house.city}, {house.state} {house.zip}
               </p>
               <p>{house.overview}</p>
             </div>
@@ -64,7 +64,7 @@ const HouseItem = ({ house }) => {
         <Modal.Header closeButton>
           <Modal.Title className="d-flex justify-content-between w-100">
             <span>
-              {house.address}, {house.city}, {house.state}
+              {house.address}, {house.city}, {house.state} {house.zip}
             </span>
             <span className="me-3" onClick={(event) => savePostHandler(event)}>
               <FaHeart className="" />

@@ -5,6 +5,7 @@ import HouseItem from "./houseItem";
 
 const HouseList = () => {
   const { houses, loading } = useSelector((state) => state.houses);
+  console.log(JSON.stringify(houses))
   const dispatch = useDispatch();
   // useEffect(() => {
   //     dispatch(findTuitsThunk())

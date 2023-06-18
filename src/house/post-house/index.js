@@ -1,0 +1,370 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Modal, Button, Form } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import * as formik from "formik";
+import * as yup from "yup";
+import { createHousePost } from "../reducers/houses-reducer";
+import { useSelector } from "react-redux";
+
+const PostHouse = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const { Formik } = formik;
+
+  const schema = yup.object().shape({
+    address: yup.string().required(),
+    price: yup.number().required().positive(),
+    type: yup.string().required(),
+    city: yup.string().required(),
+    state: yup.string().required(),
+    zip: yup.string().required(),
+    bedrooms: yup.number().required().positive().integer(),
+    bathrooms: yup.number().required().positive(),
+    size: yup.number().required().positive(),
+    year: yup.number().required().positive().integer(),
+    overview: yup.string().required(),
+    images: yup.mixed().required(),
+    terms: yup.bool().required().oneOf([true], "terms must be accepted"),
+  });
+
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Post New House
+      </Button>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        scrollable="true"
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Post New House</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Formik
+            validationSchema={schema}
+            initialValues={{
+              address: "",
+              price: "",
+              type: "single family",
+              city: "",
+              state: "",
+              zip: "",
+              file: null,
+              terms: false,
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                values = {...values, agent: currentUser._id}
+                dispatch(createHousePost(values));
+                setSubmitting(false);
+                handleClose();
+              }, 400);
+            }}
+          >
+            {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
+              <Form noValidate onSubmit={handleSubmit}>
+                <Row className="mb-3">
+                  <Form.Group
+                    as={Col}
+                    md="6"
+                    controlId="validationFormik103"
+                    className="position-relative"
+                  >
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Address"
+                      name="address"
+                      value={values.address}
+                      onChange={handleChange}
+                      isInvalid={!!errors.address}
+                    />
+
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.address}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik103"
+                    className="position-relative"
+                  >
+                    <Form.Label>Price $</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Price $"
+                      name="price"
+                      value={values.price}
+                      onChange={handleChange}
+                      isInvalid={!!errors.price}
+                    />
+
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.price}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormikUsername2"
+                  >
+                    <Form.Label>Type</Form.Label>
+                    <Form.Select
+                      name="type"
+                      value={values.type}
+                      onChange={handleChange}
+                    >
+                      <option value={"single familty"}>single family</option>
+                      <option value={"townhouse"}>townhouse</option>
+                      <option value={"condo"}>condo</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik103"
+                    className="position-relative"
+                  >
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="City"
+                      name="city"
+                      value={values.city}
+                      onChange={handleChange}
+                      isInvalid={!!errors.city}
+                    />
+
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.city}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik104"
+                    className="position-relative"
+                  >
+                    <Form.Label>State</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="State"
+                      name="state"
+                      value={values.state}
+                      onChange={handleChange}
+                      isInvalid={!!errors.state}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.state}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik105"
+                    className="position-relative"
+                  >
+                    <Form.Label>Zip</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Zip"
+                      name="zip"
+                      value={values.zip}
+                      onChange={handleChange}
+                      isInvalid={!!errors.zip}
+                    />
+
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.zip}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik103"
+                    className="position-relative"
+                  >
+                    <Form.Label>Bedrooms</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="bedrooms"
+                      value={values.bedrooms}
+                      onChange={handleChange}
+                      isInvalid={!!errors.bedrooms}
+                    />
+
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.bedrooms}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik104"
+                    className="position-relative"
+                  >
+                    <Form.Label>Bathrooms</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="bathrooms"
+                      value={values.bathrooms}
+                      onChange={handleChange}
+                      isInvalid={!!errors.bathrooms}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.bathrooms}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik104"
+                    className="position-relative"
+                  >
+                    <Form.Label>Size</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="size"
+                      value={values.size}
+                      onChange={handleChange}
+                      isInvalid={!!errors.size}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.size}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik104"
+                    className="position-relative"
+                  >
+                    <Form.Label>Year</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Built Year"
+                      name="year"
+                      value={values.year}
+                      onChange={handleChange}
+                      isInvalid={!!errors.year}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.year}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                  <Form.Group
+                    as={Col}
+                    md="12"
+                    controlId="validationFormik103"
+                    className="position-relative"
+                  >
+                    <Form.Label>Overview</Form.Label>
+                    <Form.Control
+                      type="textarea"
+                      name="overview"
+                      value={values.overview}
+                      onChange={handleChange}
+                      isInvalid={!!errors.overview}
+                    />
+
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.overview}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
+                <Form.Group className="position-relative mb-3">
+                  <Form.Label>Images</Form.Label>
+                  <Form.Control
+                    type="file"
+                    required
+                    name="images"
+                    onChange={handleChange}
+                    isInvalid={!!errors.images}
+                  />
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {errors.images}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="position-relative mb-3">
+                  <Form.Check
+                    required
+                    name="terms"
+                    label="Agree to terms and conditions"
+                    onChange={handleChange}
+                    isInvalid={!!errors.terms}
+                    feedback={errors.terms}
+                    feedbackType="invalid"
+                    id="validationFormik106"
+                    feedbackTooltip
+                  />
+                </Form.Group>
+                <div className="d-flex justify-content-between">
+                  <Button variant="secondary" onClick={handleClose}>
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    Submit Post
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+};
+export default PostHouse;
+
+{
+  /* <div className="row">
+            <div className="col-auto">
+                <img src="/images/nasa.png" width={60} />
+            </div>
+            <div className="col-10">
+                <textarea value={whatsHappening} placeholder="What's happening?"
+                    className="form-control border-0"
+                    onChange={(event) => setWhatsHappening(event.target.value)}>
+                </textarea>
+                <div>
+                    <button className="rounded-pill btn btn-primary float-end mt-2 ps-3 pe-3 fw-bold"
+                        onClick={tuitClickHandler}>
+                        Tuit
+                    </button>
+                    <div className="text-primary fs-2">
+                        <AiOutlinePicture className="me-3" />
+                        <HiOutlineGif className="me-3" />
+                        <MdFormatListBulleted className="me-3" />
+                        <BsEmojiSmile className="me-3" />
+                        <TbCalendarStats className="me-3" />
+                        <HiOutlineLocationMarker className="me-3" />
+                        <BiBold className="me-3" />
+                        <BiItalic className="me-3" />
+                    </div>
+                </div>
+            </div>
+            <div className="col-12"><hr /></div>
+        </div> */
+}
