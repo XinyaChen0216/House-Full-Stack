@@ -65,29 +65,34 @@ const housesSlice = createSlice({
     },
     searchHouse(state, action) {
       const options = {
-        includeScore: true,
-        keys: ["address", "city", "state"],
+        includeScore: false,
+        keys: ["address", "city", "state", "zip"],
       };
 
       const fuse = new Fuse(state.houses, options);
-      const searchResult  = fuse.search(action.payload);
-      if (searchResult.length === 0 ) state.houses = [];
-      else {
-        let tempRes = [];
-        searchResult.forEach(res =>{
-          tempRes.push(state.houses[res.refIndex]);
-        });
-        state.houses = tempRes;
+      if (action.payload.trim().length > 0) {
+        const searchResult = fuse.search(action.payload);
+        if (searchResult.length === 0) state.houses = [];
+        else {
+          let tempRes = [];
+          searchResult.forEach((res) => {
+            tempRes.push(state.houses[res.refIndex]);
+          });
+          state.houses = tempRes;
+        }
+      } else {
+        state.houses = initialState.houses;
       }
     },
-    // createTuit(state, action) {
-    //     state.tuits.unshift({
-    //         ...action.payload,
-    //         ...templateTuit,
-    //         _id: (new Date()).getTime(),
-    //     })
-    // }
+    createHousePost(state, action) {
+      state.houses.unshift({
+        ...action.payload,
+        images: ["SpaceX.png"],
+        status: "avtive",
+        _id: new Date().getTime(),
+      });
+    },
   },
 });
-export const { deleteHouse, searchHouse } = housesSlice.actions;
+export const { deleteHouse, searchHouse, createHousePost } = housesSlice.actions;
 export default housesSlice.reducer;
