@@ -87,7 +87,7 @@ const housesSlice = createSlice({
     createHousePost(state, action) {
       state.houses.unshift({
         ...action.payload,
-        images: ["SpaceX.png"],
+        images: ["SpaceX.png"], // will be removed once hook up with api
         status: "avtive",
         _id: new Date().getTime(),
       });
