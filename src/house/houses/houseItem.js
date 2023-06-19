@@ -82,8 +82,10 @@ const HouseItem = ({ house, isSaved = false }) => {
             <span>
               {house.address}, {house.city}, {house.state} {house.zip}
             </span>
-            <span className="me-3" onClick={(event) => savePostHandler(event)}>
-              <FaRegHeart className="" />
+            <span className="me-3" onClick={(event) => {
+              savePostHandler(event); setModalShow(false)
+            }}>
+              {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
             </span>
           </Modal.Title>
         </Modal.Header>
