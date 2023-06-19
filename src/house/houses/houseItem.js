@@ -1,22 +1,38 @@
 import { useDispatch } from "react-redux";
 import { RxCross1 } from "react-icons/rx";
-import { FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { deleteHouse } from "../reducers/houses-reducer";
+import { useSelector } from "react-redux";
+import { updateUserThunk } from "../services/auth-thunks";
 
-const HouseItem = ({ house }) => {
+const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch();
   const deletePostHandler = (event, id) => {
     event.stopPropagation();
     dispatch(deleteHouse(id));
-
   };
-  const savePostHandler = (event) => {
+  const { currentUser } = useSelector((state) => state.user);
+  const savePostHandler = async (event) => {
     event.stopPropagation();
+    if (currentUser) {
+      let currSavedHouses = [...currentUser.savedHouses];
+      const idx = currSavedHouses.findIndex((curr) => curr === house._id);
+      if (idx >= 0) {
+        currSavedHouses.splice(idx, 1);
+      } else {
+        currSavedHouses.push(house._id);
+      }
+      let newProfile = {
+        ...currentUser,
+        savedHouses: [...currSavedHouses]
+      }
+      await dispatch(updateUserThunk(newProfile));
+    }
   };
   return (
     <>
@@ -41,7 +57,7 @@ const HouseItem = ({ house }) => {
               className="float-end position-absolute top-0 start-0 ps-2 pt-2"
               onClick={(event) => savePostHandler(event)}
             >
-              <FaHeart className="" />
+              {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
             </span>
           </div>
           <div className="card-body pb-1">
@@ -67,7 +83,7 @@ const HouseItem = ({ house }) => {
               {house.address}, {house.city}, {house.state} {house.zip}
             </span>
             <span className="me-3" onClick={(event) => savePostHandler(event)}>
-              <FaHeart className="" />
+              <FaRegHeart className="" />
             </span>
           </Modal.Title>
         </Modal.Header>
