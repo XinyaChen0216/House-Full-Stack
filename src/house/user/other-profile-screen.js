@@ -6,11 +6,11 @@ import {
   updateUserThunk,
 } from "../services/auth-thunks";
 function OtherProfileScreen() {
-  const { requestedUser } = useSelector((state) => state.user);
+  const { currentUser, requestedUser } = useSelector((state) => state.user);
   //const { currentUser } = useSelector((state) => state.currentUser);
   const [profile, setProfile] = useState(requestedUser);
 
-  //console.log(currentUser);
+  console.log(currentUser);
   console.log(requestedUser);
 
   const dispatch = useDispatch();
