@@ -17,6 +17,13 @@ export const profile = async () => {
     const response = await api.post(`${USERS_URL}/profile`);
     return response.data;
 };
+
+export const viewOtherProfile = async (username) => {
+    const response = await api.get(`${USERS_URL}/profile/${username}`);
+    console.log(response.data);
+    return response.data;
+};
+
 export const updateUser = async (user) => {
     const response = await api.put(`${USERS_URL}/${user._id}`, user);
     return response.data;

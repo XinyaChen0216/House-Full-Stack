@@ -10,8 +10,7 @@ function ProfileScreen() {
   const [profile, setProfile] = useState(currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const save = async () => {
-    await dispatch(updateUserThunk(profile));
+  const save = async () => {await dispatch(updateUserThunk(profile));
   };
   return (
     <div>
@@ -19,9 +18,11 @@ function ProfileScreen() {
       {profile && (
         <div>
           <div>
-            <label>First Name</label>
+            <label for="firstname" className ="fs-5">First Name</label>
             <input
               type="text"
+              id="firstname"
+              className = "form-control"
               value={profile.firstName}
               onChange={(event) => {
                 const newProfile = {
@@ -33,9 +34,11 @@ function ProfileScreen() {
             />
           </div>
           <div>
-            <label>Last Name</label>
+            <label for="lastname" className ="fs-5">Last Name</label>
             <input
               type="text"
+              id="lastname"
+              className = "form-control"
               value={profile.lastName}
               onChange={(event) => {
                 const newProfile = {
@@ -46,9 +49,45 @@ function ProfileScreen() {
               }}
             />
           </div>
+          <div>
+            <label for="phone" className ="fs-5">Phone Number</label>
+            <input
+              type="text"
+              id="phone"
+              className = "form-control"
+              value={profile.phone}
+              onChange={(event) => {
+                const newProfile = {
+                  ...profile,
+                  phone: event.target.value,
+                };
+                setProfile(newProfile);
+              }}
+            />
+          </div>
+          <div>
+            <label for="email" className ="fs-5 col">Email</label>
+            <input
+              className = "form-control"
+              id="email"
+              type="text"
+              value={profile.email}
+              onChange={(event) => {
+                const newProfile = {
+                  ...profile,
+                  email: event.target.value,
+                };
+                setProfile(newProfile);
+              }}
+            /> 
+          </div>
+          <div>
+            <label className ="fs-5">Role</label>
+            <span className = "text-primary font-italic form-control bg-light-grey">{" " + profile.role}</span>
+          </div>
         </div>
       )}
-      <button
+      <button className="btn btn-primary m-2"
         onClick={async() => {
           await dispatch(logoutThunk());
           navigate("/house/login");
@@ -57,8 +96,9 @@ function ProfileScreen() {
         {" "}
         Logout
       </button>
-      <button onClick={save}>Save </button>
+      
+      <button onClick={save} className="btn btn-primary m-2">Save </button>
     </div>
-  ); // see below
+  ); 
 }
 export default ProfileScreen;
