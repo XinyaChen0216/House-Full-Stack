@@ -11,8 +11,10 @@
         "bedrooms": 4,
         "bathrooms": 3,
         "year": 2003,
-        "status": "avtive",
-        "images": ["SpaceX.png"],
+        "status": "active",
+        "images": [
+            "SpaceX.png"
+        ],
         "overview": "pretty nice house"
     },
     {
@@ -27,8 +29,10 @@
         "bedrooms": 3,
         "bathrooms": 1.5,
         "year": 2002,
-        "status": "avtive",
-        "images": ["SpaceX.png"],
+        "status": "pending",
+        "images": [
+            "SpaceX.png"
+        ],
         "overview": "it is ok nice house"
     },
     {
@@ -43,8 +47,10 @@
         "bedrooms": 5,
         "bathrooms": 3,
         "year": 2007,
-        "status": "avtive",
-        "images": ["SpaceX.png"],
+        "status": "sold",
+        "images": [
+            "SpaceX.png"
+        ],
         "overview": "damn pretty nice house"
     }
 ]
