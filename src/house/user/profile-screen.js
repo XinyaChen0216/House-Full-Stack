@@ -23,11 +23,11 @@ function ProfileScreen() {
               type="text"
               id="firstname"
               className = "form-control"
-              value={profile.firstName}
+              value={profile.first_name}
               onChange={(event) => {
                 const newProfile = {
                   ...profile,
-                  firstName: event.target.value,
+                  first_name: event.target.value,
                 };
                 setProfile(newProfile);
               }}
@@ -39,11 +39,11 @@ function ProfileScreen() {
               type="text"
               id="lastname"
               className = "form-control"
-              value={profile.lastName}
+              value={profile.last_name}
               onChange={(event) => {
                 const newProfile = {
                   ...profile,
-                  lastName: event.target.value,
+                  last_name: event.target.value,
                 };
                 setProfile(newProfile);
               }}

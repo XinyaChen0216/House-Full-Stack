@@ -7,12 +7,7 @@ import {
 } from "../services/auth-thunks";
 function OtherProfileScreen() {
   const { currentUser, requestedUser } = useSelector((state) => state.user);
-  //const { currentUser } = useSelector((state) => state.currentUser);
   const [profile, setProfile] = useState(requestedUser);
-
-  console.log(currentUser);
-  console.log(requestedUser);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
@@ -22,11 +17,11 @@ function OtherProfileScreen() {
         <div>
           <div>
             <label for="firstname" className ="fs-5">First Name</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.firstName}</span>
+            <span className = "text-primary font-italic form-control bg-light">{" " + profile.first_name}</span>
           </div>
           <div>
             <label for="lastname" className ="fs-5">Last Name</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.lastName}</span>
+            <span className = "text-primary font-italic form-control bg-light">{" " + profile.last_name}</span>
           </div>
           <div>
             <label for="phone" className ="fs-5">Phone Number</label>
