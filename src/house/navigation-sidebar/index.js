@@ -17,8 +17,8 @@ const NavigationSidebar = () => {
                         </span>
                     </Link>
                 )}
-                {!currentUser && <Link className="list-group" to="/house/login">   Login   </Link>}
-                {!currentUser && <Link className="list-group" to="/house/register">Register</Link>}
+                {!currentUser && <Link className="list-group-item" to="/house/login">   Login   </Link>}
+                {!currentUser && <Link className="list-group-item" to="/house/register">Register</Link>}
                 {/* {currentUser && <Link className="list-group" to="/house/profile"> Profile </Link>} */}
 
             </div>

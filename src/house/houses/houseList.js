@@ -10,9 +10,9 @@ const HouseList = () => {
   const dispatch = useDispatch();
   let savedHouses = [];
   let generalHouses = [];
-  if (currentUser && currentUser.savedHouses.length > 0) {
+  if (currentUser && currentUser.saved_houses.length > 0) {
     houses.forEach(house => {
-      if (currentUser.savedHouses.includes(house._id)) {
+      if (currentUser.saved_houses.includes(house._id)) {
         savedHouses.push(house);
       } else {
         generalHouses.push(house)

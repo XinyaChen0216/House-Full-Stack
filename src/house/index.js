@@ -4,6 +4,7 @@ import HomeScreen from "./home-screen";
 import ExploreScreen from "./explore-screen";
 import BookmarksScreen from "./bookmarks-screen";
 import ProfileScreen from "./user/profile-screen";
+import OtherProfileScreen from "./user/other-profile-screen";
 import Notifications from "./notifications-screen";
 import Messages from "./messages-screen";
 import List from "./lists-screen";
@@ -34,6 +35,7 @@ function House() {
                             <Route path="/explore" element={<ExploreScreen />} />
                             <Route path="/bookmarks" element={<BookmarksScreen />} />
                             <Route path="/profile" element={<ProfileScreen />} />
+                            <Route path="/profile/*" element={<OtherProfileScreen />} />
                             <Route path="/notifications" element={<Notifications />} />
                             <Route path="/messages" element={<Messages />} />
                             <Route path="/lists" element={<List />} />
