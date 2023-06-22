@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import {
@@ -7,9 +7,14 @@ import {
 } from "../services/auth-thunks";
 function OtherProfileScreen() {
   const { currentUser, requestedUser } = useSelector((state) => state.user);
+  // console.log(JSON.stringify(currentUser));
+  // console.log(JSON.stringify(requestedUser))
   const [profile, setProfile] = useState(requestedUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(()=>{
+    setProfile(requestedUser)
+  }, [requestedUser])
   return (
     <div>
       <h1>Profile Screen</h1>
