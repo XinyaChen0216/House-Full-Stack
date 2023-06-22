@@ -11,9 +11,13 @@ import { updateUserThunk } from "../services/auth-thunks";
 import { BsFillHouseHeartFill, BsFillCalendarWeekFill } from "react-icons/bs"
 import { GrView } from "react-icons/gr"
 import { RxDotFilled } from "react-icons/rx"
+import Button from 'react-bootstrap/Button';
+import { Link, Navigate } from "react-router-dom";
 
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
+  const [anonymousUserModalShow, setAnonymousUserModalShow] = useState(false);
+
   const dispatch = useDispatch();
   const deletePostHandler = (event, id) => {
     event.stopPropagation();
@@ -36,6 +40,8 @@ const HouseItem = ({ house, isSaved = false }) => {
         saved_houses: [...currSavedHouses]
       }
       await dispatch(updateUserThunk(newProfile));
+    } else {
+      setAnonymousUserModalShow(true);
     }
   };
   return (
@@ -62,7 +68,9 @@ const HouseItem = ({ house, isSaved = false }) => {
               onClick={(event) => savePostHandler(event)}
             >
               {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
+
             </span>
+
           </div>
           <div className="card-body pb-1">
             <h5 className="card-title">Price: ${house.price}</h5>
@@ -74,7 +82,7 @@ const HouseItem = ({ house, isSaved = false }) => {
             </div>
           </div>
         </div>
-      </li>
+      </li >
       <Modal
         size="lg"
         scrollable="true"
@@ -123,6 +131,39 @@ const HouseItem = ({ house, isSaved = false }) => {
 
         </Modal.Body>
       </Modal>
+
+      <Modal
+        size="sm"
+        // scrollable="false"
+        show={anonymousUserModalShow}
+        onHide={() => setAnonymousUserModalShow(false)}
+      >
+        <div
+          className="modal show"
+          style={{ display: 'block', position: 'initial' }}
+        >
+          <Modal.Dialog>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Attention</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p>Must login to save houses!</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="list-group ">
+                {<Link className="list-group-item mb-2 btn btn-primary rounded-pill float-end" to="/house/login">   Login   </Link>}
+                {<Link className="list-group-item btn btn-primary rounded-pill float-end" to="/house/register">Register</Link>}
+
+              </div>
+            </Modal.Footer>
+
+          </Modal.Dialog>
+        </div>
+
+
+      </Modal >
+
     </>
   );
 };
