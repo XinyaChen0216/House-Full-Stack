@@ -23,7 +23,8 @@ const HouseItem = ({ house, isSaved = false }) => {
   const savePostHandler = async (event) => {
     event.stopPropagation();
     if (currentUser) {
-      let currSavedHouses = [...currentUser.savedHouses];
+      let currSavedHouses = [...currentUser.saved_houses];
+
       const idx = currSavedHouses.findIndex((curr) => curr === house._id);
       if (idx >= 0) {
         currSavedHouses.splice(idx, 1);
@@ -32,7 +33,7 @@ const HouseItem = ({ house, isSaved = false }) => {
       }
       let newProfile = {
         ...currentUser,
-        savedHouses: [...currSavedHouses]
+        saved_houses: [...currSavedHouses]
       }
       await dispatch(updateUserThunk(newProfile));
     }
