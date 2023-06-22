@@ -18,20 +18,20 @@ const WhoToFollowListItem = (
                 <div className="col-2">
                     <img className="rounded-circle" height={48} src={`/images/${who.avatarIcon}`} />
                 </div>
-                <div className="col-8">
+                <div className="col-5">
                     <div className="fw-bold">{who.userName}</div>
                     <div>@{who.handle}</div>
                 </div>
-                <div>
-                <button className="btn btn-primary rounded-pill float-end"
+                
+                <div className="col-5">
+                
+                <button className="col btn btn-primary rounded-pill float-end"
                     onClick={async () => {
                         await dispatch(viewProfileThunk(who.userName));
                         let url = '/house/profile/' + who.userName;
                         navigate(url);
                     }}>View Profile</button>
-                </div>
-                <div className="col-2">
-                    <button className="btn btn-primary rounded-pill float-end">Follow</button>
+                
                 </div>
             </div>
         </li>
