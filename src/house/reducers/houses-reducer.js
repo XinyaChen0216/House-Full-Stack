@@ -1,51 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
-import houses from "./houses.json";
+// import houses from "./houses.json";
 import Fuse from "fuse.js";
-// import { updateTuitThunk, createTuitThunk, deleteTuitThunk, findTuitsThunk } from "../services/tuits-thunks";
+import { updateTuitThunk, createTuitThunk, deleteTuitThunk, findHousesThunk } from "../services/houses-thunks";
 const initialState = {
-  houses: houses,
+  // houses: houses,
+  houses: [],
   loading: false,
 };
 
 const housesSlice = createSlice({
   name: "houses",
   initialState,
-  // extraReducers: {
-  //     [updateTuitThunk.fulfilled]:
-  //         (state, { payload }) => {
-  //             state.loading = false
-  //             const tuitNdx = state.tuits.findIndex((t) => t._id === payload._id)
-  //             state.tuits[tuitNdx] = { ...state.tuits[tuitNdx], ...payload }
-  //         },
+  extraReducers: {
+    //     [updateTuitThunk.fulfilled]:
+    //         (state, { payload }) => {
+    //             state.loading = false
+    //             const tuitNdx = state.tuits.findIndex((t) => t._id === payload._id)
+    //             state.tuits[tuitNdx] = { ...state.tuits[tuitNdx], ...payload }
+    //         },
 
-  //     [createTuitThunk.fulfilled]:
-  //         (state, { payload }) => {
-  //             state.loading = false
-  //             state.tuits.push(payload)
-  //         },
+    //     [createTuitThunk.fulfilled]:
+    //         (state, { payload }) => {
+    //             state.loading = false
+    //             state.tuits.push(payload)
+    //         },
 
-  //     [deleteTuitThunk.fulfilled]:
-  //         (state, { payload }) => {
-  //             state.loading = false
-  //             state.tuits = state.tuits.filter(t => t._id !== payload)
-  //         },
+    //     [deleteTuitThunk.fulfilled]:
+    //         (state, { payload }) => {
+    //             state.loading = false
+    //             state.tuits = state.tuits.filter(t => t._id !== payload)
+    //         },
 
-  //     [findTuitsThunk.pending]:
-  //         (state) => {
-  //             state.loading = true
-  //             state.tuits = []
-  //         },
-  //     [findTuitsThunk.fulfilled]:
-  //         (state, { payload }) => {
-  //             state.loading = false
-  //             state.tuits = payload
-  //         },
-  //     [findTuitsThunk.rejected]:
-  //         (state, action) => {
-  //             state.loading = false
-  //             state.error = action.error
-  //         }
-  // },
+    [findHousesThunk.pending]:
+      (state) => {
+        state.loading = true
+        state.houses = []
+      },
+    [findHousesThunk.fulfilled]:
+      (state, { payload }) => {
+        state.loading = false
+        state.houses = payload
+      },
+    [findHousesThunk.rejected]:
+      (state, action) => {
+        state.loading = false
+        state.error = action.error
+      }
+  },
 
   reducers: {
     // updateLike(state, action) {
