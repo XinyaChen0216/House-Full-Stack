@@ -91,6 +91,7 @@ const HouseItem = ({ house, isSaved = false }) => {
         </Modal.Header>
         <Modal.Body>
           <Carousel data-bs-theme="dark">
+            <iframe src={`https://maps.google.com/maps?q=${house.latitude},${house.longitude}&hl=es;&output=embed`} height="500px" width="100%" title={house._id}/>
             {house.images.map((image) => (
               <Carousel.Item>
                 <img
