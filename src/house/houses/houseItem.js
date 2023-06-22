@@ -8,6 +8,9 @@ import Carousel from "react-bootstrap/Carousel";
 import { deleteHouse } from "../reducers/houses-reducer";
 import { useSelector } from "react-redux";
 import { updateUserThunk } from "../services/auth-thunks";
+import { BsFillHouseHeartFill, BsFillCalendarWeekFill } from "react-icons/bs";
+import { GrView } from "react-icons/gr";
+import { RxDotFilled } from "react-icons/rx";
 
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -20,7 +23,8 @@ const HouseItem = ({ house, isSaved = false }) => {
   const savePostHandler = async (event) => {
     event.stopPropagation();
     if (currentUser) {
-      let currSavedHouses = [...currentUser.savedHouses];
+      let currSavedHouses = [...currentUser.saved_houses];
+
       const idx = currSavedHouses.findIndex((curr) => curr === house._id);
       if (idx >= 0) {
         currSavedHouses.splice(idx, 1);
@@ -29,8 +33,8 @@ const HouseItem = ({ house, isSaved = false }) => {
       }
       let newProfile = {
         ...currentUser,
-        savedHouses: [...currSavedHouses]
-      }
+        saved_houses: [...currSavedHouses],
+      };
       await dispatch(updateUserThunk(newProfile));
     }
   };
@@ -46,6 +50,7 @@ const HouseItem = ({ house, isSaved = false }) => {
               src={`/images/${house.images[0]}`}
               className="card-img-top position-relative"
               alt="..."
+              style={{ width: "100%", height: "200px" }}
             />
             <span
               className="float-end position-absolute top-0 end-0 pe-2 pt-2"
@@ -57,16 +62,18 @@ const HouseItem = ({ house, isSaved = false }) => {
               className="float-end position-absolute top-0 start-0 ps-2 pt-2"
               onClick={(event) => savePostHandler(event)}
             >
-              {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
+              {(isSaved && <FaHeart className="text-danger" />) || (
+                <FaRegHeart />
+              )}
             </span>
           </div>
           <div className="card-body pb-1">
             <h5 className="card-title">Price: ${house.price}</h5>
             <div className="card-text">
               <p className="mb-0">
-                {house.address}, {house.city}, {house.state} {house.zip}
+                {house.address}, {house.city}, {house.state} {house.zipcode}
               </p>
-              <p>{house.overview}</p>
+              {/* <p>{house.overview}</p> */}
             </div>
           </div>
         </div>
@@ -80,30 +87,82 @@ const HouseItem = ({ house, isSaved = false }) => {
         <Modal.Header closeButton>
           <Modal.Title className="d-flex justify-content-between w-100">
             <span>
-              {house.address}, {house.city}, {house.state} {house.zip}
+              {house.address}, {house.city}, {house.state} {house.zipcode}
             </span>
-            <span className="me-3" onClick={(event) => {
-              savePostHandler(event); setModalShow(false)
-            }}>
-              {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
+            <span
+              className="me-3"
+              onClick={(event) => {
+                savePostHandler(event);
+                setModalShow(false);
+              }}
+            >
+              {(isSaved && <FaHeart className="text-danger" />) || (
+                <FaRegHeart />
+              )}
             </span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Carousel data-bs-theme="dark">
-            <iframe src={`https://maps.google.com/maps?q=${house.latitude},${house.longitude}&hl=es;&output=embed`} height="500px" width="100%" title={house._id}/>
+            <iframe
+              src={`https://maps.google.com/maps?q=${house.latitude},${house.longitude}&hl=es;&output=embed`}
+              height="500px"
+              width="100%"
+              title={house._id}
+            />
             {house.images.map((image) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
                   src={`/images/${image}`}
                   alt=""
+                  style={{ width: "100%", height: "500px" }}
                 />
               </Carousel.Item>
             ))}
           </Carousel>
-          <h3>Overview</h3>
-          <span>{house.overview}</span>
+          <h3>
+            <div className="mb-1">
+              <b>
+                <span className="fs-1">${house.price}</span>
+              </b>{" "}
+              <span className="ms-4">
+                <b>{house.bedrooms}</b> bd | <b>{house.bathrooms}</b> ba |{" "}
+                <b>{house.size}</b> sqft{" "}
+              </span>
+            </div>
+            <div className="fs-4 mb-3">
+              {house.address}, {house.city}, {house.state} {house.zipcode}
+            </div>
+            <div className="mb-2">
+              <button type="button" class="btn btn-primary">
+                Contact Agent
+              </button>
+            </div>
+            <div className="mb-2">
+              {house.status === "active" && (
+                <RxDotFilled style={{ color: "red" }} />
+              )}
+              {house.status === "pending" && (
+                <RxDotFilled style={{ color: "orange" }} />
+              )}
+              {house.status === "sold" && (
+                <RxDotFilled style={{ color: "grey" }} />
+              )}
+              {house.status}
+            </div>
+            <h4> Overview </h4>
+            <div>
+              <BsFillHouseHeartFill /> {house.type}
+            </div>
+            <div>
+              <BsFillCalendarWeekFill /> built in {house.year}
+            </div>
+            <div>
+              <GrView />
+              <span> {house.overview} </span>
+            </div>
+          </h3>
         </Modal.Body>
       </Modal>
     </>

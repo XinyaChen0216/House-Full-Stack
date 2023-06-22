@@ -17,16 +17,16 @@ const NavigationSidebar = () => {
                         </span>
                     </Link>
                 )}
-                {!currentUser && <Link className="list-group" to="/house/login">   Login   </Link>}
-                {!currentUser && <Link className="list-group" to="/house/register">Register</Link>}
+                {!currentUser && <Link className="list-group-item" to="/house/login">   Login   </Link>}
+                {!currentUser && <Link className="list-group-item" to="/house/register">Register</Link>}
                 {/* {currentUser && <Link className="list-group" to="/house/profile"> Profile </Link>} */}
 
             </div>
-            <div>
+            {/* <div>
                 <button type="button" className="btn btn-primary rounded-pill w-100">
                     <span className="text-break">Tweet</span>
                 </button>
-            </div>
+            </div> */}
         </>
     );
 };
