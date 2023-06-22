@@ -67,9 +67,9 @@ const HouseItem = ({ house, isSaved = false }) => {
             <h5 className="card-title">Price: ${house.price}</h5>
             <div className="card-text">
               <p className="mb-0">
-                {house.address}, {house.city}, {house.state} {house.zip}
+                {house.address}, {house.city}, {house.state} {house.zipcode}
               </p>
-              <p>{house.overview}</p>
+              {/* <p>{house.overview}</p> */}
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@ const HouseItem = ({ house, isSaved = false }) => {
         <Modal.Header closeButton>
           <Modal.Title className="d-flex justify-content-between w-100">
             <span>
-              {house.address}, {house.city}, {house.state} {house.zip}
+              {house.address}, {house.city}, {house.state} {house.zipcode}
             </span>
             <span className="me-3" onClick={(event) => {
               savePostHandler(event); setModalShow(false)
@@ -94,7 +94,7 @@ const HouseItem = ({ house, isSaved = false }) => {
         </Modal.Header>
         <Modal.Body>
           <Carousel data-bs-theme="dark">
-            {house.images.map((image) => (
+            {(house.images).map((image) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
@@ -106,7 +106,7 @@ const HouseItem = ({ house, isSaved = false }) => {
           </Carousel>
           <h3>
             <div className="mb-1"><b><span className="fs-1">${house.price}</span></b> <span className="ms-4"><b>{house.bedrooms}</b> bd | <b>{house.bathrooms}</b> ba | <b>{house.size}</b> sqft </span></div>
-            <div className="fs-4 mb-3">{house.address}, {house.city}, {house.state} {house.zip}</div>
+            <div className="fs-4 mb-3">{house.address}, {house.city}, {house.state} {house.zipcode}</div>
             <div className="mb-2"><button type="button" class="btn btn-primary">Contact Agent</button></div>
             <div className="mb-2">
               {house.status == "active" && <RxDotFilled style={{ color: "red" }} />}

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { findTuitsThunk } from "../services/tuits-thunks";
 import HouseItem from "./houseItem";
+import { findHousesThunk } from "../services/houses-thunks";
 
 const HouseList = () => {
   const { houses, loading } = useSelector((state) => state.houses);
@@ -19,9 +19,12 @@ const HouseList = () => {
       }
     });
   } else generalHouses = houses;
-  // useEffect(() => {
-  //     dispatch(findTuitsThunk())
-  // }, [])
+  // console.log(houses)
+  // console.log(savedHouses)
+  // console.log(generalHouses)
+  useEffect(() => {
+    dispatch(findHousesThunk())
+  }, [])
   return (
     <>
       {loading && <h3>Loading...</h3>}
@@ -33,8 +36,9 @@ const HouseList = () => {
       </ul>
       <h3>Available Houses:</h3>
       <ul className="list-group d-flex flex-row flex-wrap justify-content-start">
-        {generalHouses.map((house) => (
-          <HouseItem house={house} />
+        {generalHouses.map(house => (
+          // console.log(JSON.stringify(house))
+          < HouseItem house={house} />
         ))}
       </ul>
     </>
