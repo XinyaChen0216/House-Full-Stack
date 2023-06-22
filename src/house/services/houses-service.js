@@ -9,7 +9,7 @@ const HOUSE_API = `${API_BASE}/houses`;
 export const createHouse = async (house) => {
     const street = house.address.trim().split(" ").join("%20");
     const address = `${street}%20${house.city.trim()}%20${house.state.trim()}`;
-    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCUGUr71USvIfgN8T5VashveaMW0j8twuw`)
+    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.googleApiKey}`)
     house.latitude = res.data.results[0].geometry.location.lat;
     house.longitude = res.data.results[0].geometry.location.lng;
     const response = await axios.post(HOUSE_API, house)
