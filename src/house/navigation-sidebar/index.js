@@ -10,7 +10,7 @@ const NavigationSidebar = () => {
     const { currentUser } = useSelector((state) => state.user);
     return (
         <>
-            <div className="list-group mb-2">
+            <div className="list-group mb-2 mt-2">
                 {links.map(({ name, icon }) =>
                     <Link to={`/house/${name}`} className={`list-group-item text-capitalize ${active === name ? "active" : ""} d-flex align-items-center`}>
                         <FontAwesomeIcon icon={icon} />{' '}<span className="d-none d-lg-none d-xl-block ms-2">{name}

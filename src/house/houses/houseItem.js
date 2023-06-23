@@ -8,12 +8,20 @@ import Carousel from "react-bootstrap/Carousel";
 import { deleteHouse } from "../reducers/houses-reducer";
 import { useSelector } from "react-redux";
 import { updateUserThunk } from "../services/auth-thunks";
+
 import { BsFillHouseHeartFill, BsFillCalendarWeekFill } from "react-icons/bs"
 import { GrView } from "react-icons/gr"
 import { RxDotFilled } from "react-icons/rx"
+import Button from 'react-bootstrap/Button';
+import { Link, Navigate } from "react-router-dom";
+
+
+
 
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
+  const [anonymousUserModalShow, setAnonymousUserModalShow] = useState(false);
+
   const dispatch = useDispatch();
   const deletePostHandler = (event, id) => {
     event.stopPropagation();
@@ -33,9 +41,11 @@ const HouseItem = ({ house, isSaved = false }) => {
       }
       let newProfile = {
         ...currentUser,
-        saved_houses: [...currSavedHouses]
-      }
+        saved_houses: [...currSavedHouses],
+      };
       await dispatch(updateUserThunk(newProfile));
+    } else {
+      setAnonymousUserModalShow(true);
     }
   };
   return (
@@ -47,9 +57,10 @@ const HouseItem = ({ house, isSaved = false }) => {
         <div className="card" onClick={() => setModalShow(true)}>
           <div className="">
             <img
-              src={`/images/${house.images[0]}`}
+              src={`data:image/png;base64,${house.imageStrings[0]}`}
               className="card-img-top position-relative"
               alt="..."
+              style={{ width: "100%", height: "200px" }}
             />
             <span
               className="float-end position-absolute top-0 end-0 pe-2 pt-2"
@@ -61,8 +72,12 @@ const HouseItem = ({ house, isSaved = false }) => {
               className="float-end position-absolute top-0 start-0 ps-2 pt-2"
               onClick={(event) => savePostHandler(event)}
             >
+
               {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
+
+
             </span>
+
           </div>
           <div className="card-body pb-1">
             <h5 className="card-title">Price: ${house.price}</h5>
@@ -74,7 +89,7 @@ const HouseItem = ({ house, isSaved = false }) => {
             </div>
           </div>
         </div>
-      </li>
+      </li >
       <Modal
         size="lg"
         scrollable="true"
@@ -86,43 +101,115 @@ const HouseItem = ({ house, isSaved = false }) => {
             <span>
               {house.address}, {house.city}, {house.state} {house.zipcode}
             </span>
-            <span className="me-3" onClick={(event) => {
-              savePostHandler(event); setModalShow(false)
-            }}>
-              {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
+            <span
+              className="me-3"
+              onClick={(event) => {
+                savePostHandler(event);
+                setModalShow(false);
+              }}
+            >
+              {(isSaved && <FaHeart className="text-danger" />) || (
+                <FaRegHeart />
+              )}
             </span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Carousel data-bs-theme="dark">
-            {(house.images).map((image) => (
+            <iframe
+              src={`https://maps.google.com/maps?q=${house.latitude},${house.longitude}&hl=es;&output=embed`}
+              height="500px"
+              width="100%"
+              title={house._id}
+            />
+            {house.imageStrings.map((imageString) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src={`/images/${image}`}
+                  src={`data:image/png;base64,${imageString}`}
                   alt=""
+                  style={{ width: "100%", height: "500px" }}
                 />
               </Carousel.Item>
             ))}
           </Carousel>
           <h3>
-            <div className="mb-1"><b><span className="fs-1">${house.price}</span></b> <span className="ms-4"><b>{house.bedrooms}</b> bd | <b>{house.bathrooms}</b> ba | <b>{house.size}</b> sqft </span></div>
-            <div className="fs-4 mb-3">{house.address}, {house.city}, {house.state} {house.zipcode}</div>
-            <div className="mb-2"><button type="button" class="btn btn-primary">Contact Agent</button></div>
+            <div className="mb-1">
+              <b>
+                <span className="fs-1">${house.price}</span>
+              </b>{" "}
+              <span className="ms-4">
+                <b>{house.bedrooms}</b> bd | <b>{house.bathrooms}</b> ba |{" "}
+                <b>{house.size}</b> sqft{" "}
+              </span>
+            </div>
+            <div className="fs-4 mb-3">
+              {house.address}, {house.city}, {house.state} {house.zipcode}
+            </div>
             <div className="mb-2">
-              {house.status == "active" && <RxDotFilled style={{ color: "red" }} />}
-              {house.status == "pending" && <RxDotFilled style={{ color: "orange" }} />}
-              {house.status == "sold" && <RxDotFilled style={{ color: "grey" }} />}
+              <button type="button" class="btn btn-primary">
+                Contact Agent
+              </button>
+            </div>
+            <div className="mb-2">
+              {house.status === "active" && (
+                <RxDotFilled style={{ color: "red" }} />
+              )}
+              {house.status === "pending" && (
+                <RxDotFilled style={{ color: "orange" }} />
+              )}
+              {house.status === "sold" && (
+                <RxDotFilled style={{ color: "grey" }} />
+              )}
               {house.status}
             </div>
             <h4> Overview </h4>
-            <div><BsFillHouseHeartFill /> {house.type}</div>
-            <div><BsFillCalendarWeekFill /> built in {house.year}</div>
-            <div><GrView /><span> {house.overview} </span></div>
+            <div>
+              <BsFillHouseHeartFill /> {house.type}
+            </div>
+            <div>
+              <BsFillCalendarWeekFill /> built in {house.year}
+            </div>
+            <div>
+              <GrView />
+              <span> {house.overview} </span>
+            </div>
           </h3>
-
         </Modal.Body>
       </Modal>
+
+      <Modal
+        size="sm"
+        // scrollable="false"
+        show={anonymousUserModalShow}
+        onHide={() => setAnonymousUserModalShow(false)}
+      >
+        <div
+          className="modal show"
+          style={{ display: 'block', position: 'initial' }}
+        >
+          <Modal.Dialog>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Attention</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p>Must login to save houses!</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="list-group ">
+                {<Link className="list-group-item mb-2 btn btn-primary rounded-pill float-end" to="/house/login">   Login   </Link>}
+                {<Link className="list-group-item btn btn-primary rounded-pill float-end" to="/house/register">Register</Link>}
+
+              </div>
+            </Modal.Footer>
+
+          </Modal.Dialog>
+        </div>
+
+
+      </Modal >
+
     </>
   );
 };

@@ -11,7 +11,7 @@ const WhoToFollowList = () => {
         dispatch(viewTopAgentThunk())}, [])
 
     return (
-        <ul className="list-group">
+        <ul className="list-group mt-2">
             <li className="list-group-item">
                 <h3>Top 3 Agents</h3>
             </li>

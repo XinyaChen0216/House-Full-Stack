@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import * as formik from "formik";
 import * as yup from "yup";
-import { createHousePost } from "../reducers/houses-reducer";
+import { createHouseThunk, uploadImagesThunk } from "../services/houses-thunks";
 import { useSelector } from "react-redux";
 
 const PostHouse = () => {
@@ -24,7 +24,7 @@ const PostHouse = () => {
     type: yup.string().required(),
     city: yup.string().required(),
     state: yup.string().required(),
-    zip: yup.string().required(),
+    zipcode: yup.string().required(),
     bedrooms: yup.number().required().positive().integer(),
     bathrooms: yup.number().required().positive(),
     size: yup.number().required().positive(),
@@ -54,27 +54,25 @@ const PostHouse = () => {
           <Formik
             validationSchema={schema}
             initialValues={{
-              address: "",
-              price: "",
               type: "single family",
-              city: "",
-              state: "",
-              zip: "",
-              file: null,
               terms: false,
             }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 let formData = new FormData();
-                formData.append("file", values.images);
-                // need api support here @vincentli1994
                 let images = [];
                 for (const image of values.images) {
+                  formData.append("images", image);
                   images.push(image.name);
                 }
                 values.images = images;
-                values = { ...values, agent: currentUser._id };
-                dispatch(createHousePost(values));
+                values = {
+                  ...values,
+                  agent: currentUser._id,
+                  date_posted: new Date(),
+                };
+                dispatch(uploadImagesThunk(formData));
+                dispatch(createHouseThunk(values));
                 setSubmitting(false);
                 handleClose();
               }, 400);
@@ -193,18 +191,18 @@ const PostHouse = () => {
                     controlId="validationFormik105"
                     className="position-relative"
                   >
-                    <Form.Label>Zip</Form.Label>
+                    <Form.Label>Zip Code</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Zip"
-                      name="zip"
-                      value={values.zip}
+                      placeholder="Zip Code"
+                      name="zipcode"
+                      value={values.zipcode}
                       onChange={handleChange}
-                      isInvalid={!!errors.zip}
+                      isInvalid={!!errors.zipcode}
                     />
 
                     <Form.Control.Feedback type="invalid" tooltip>
-                      {errors.zip}
+                      {errors.zipcode}
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
@@ -355,34 +353,3 @@ const PostHouse = () => {
   );
 };
 export default PostHouse;
-
-{
-  /* <div className="row">
-            <div className="col-auto">
-                <img src="/images/nasa.png" width={60} />
-            </div>
-            <div className="col-10">
-                <textarea value={whatsHappening} placeholder="What's happening?"
-                    className="form-control border-0"
-                    onChange={(event) => setWhatsHappening(event.target.value)}>
-                </textarea>
-                <div>
-                    <button className="rounded-pill btn btn-primary float-end mt-2 ps-3 pe-3 fw-bold"
-                        onClick={tuitClickHandler}>
-                        Tuit
-                    </button>
-                    <div className="text-primary fs-2">
-                        <AiOutlinePicture className="me-3" />
-                        <HiOutlineGif className="me-3" />
-                        <MdFormatListBulleted className="me-3" />
-                        <BsEmojiSmile className="me-3" />
-                        <TbCalendarStats className="me-3" />
-                        <HiOutlineLocationMarker className="me-3" />
-                        <BiBold className="me-3" />
-                        <BiItalic className="me-3" />
-                    </div>
-                </div>
-            </div>
-            <div className="col-12"><hr /></div>
-        </div> */
-}

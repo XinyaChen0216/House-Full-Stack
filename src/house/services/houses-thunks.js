@@ -23,6 +23,14 @@ export const createHouseThunk = createAsyncThunk(
     }
 )
 
+export const uploadImagesThunk = createAsyncThunk(
+    'houses/images/upload',
+    async (formData) => {
+        const res = await service.uploadimages(formData)
+        return res.status;
+    }
+)
+
 export const updateHouseThunk =
     createAsyncThunk(
         'houses/updateHouse',
