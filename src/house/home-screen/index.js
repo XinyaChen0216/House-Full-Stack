@@ -8,7 +8,7 @@ const HomeScreen = () => {
     const { currentUser } = useSelector((state) => state.user);
     return (
         <>
-            <div className="d-flex justify-content-between mb-2">
+            <div className="d-flex justify-content-between mb-2 mt-2">
                 <h4>Home</h4>
                 {currentUser && currentUser["role"] === "agent" && <PostHouse />}
             </div>
