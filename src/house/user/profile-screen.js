@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import SavedHouseList from "../houses/savedHouseList";
+import PostedHouseList from "../houses/PostedHouseList";
+
 import {
   logoutThunk,
   updateUserThunk,
@@ -85,20 +88,21 @@ function ProfileScreen() {
             <label className ="fs-5">Role</label>
             <span className = "text-primary font-italic form-control bg-light-grey">{" " + profile.role}</span>
           </div>
+          {profile.role === "seller" && <SavedHouseList />}
+          {profile.role === "buyer" && <SavedHouseList />}
+          {profile.role === "agent" && <PostedHouseList />}
         </div>
       )}
-      <button className="btn btn-primary m-2"
-        onClick={async() => {
-          await dispatch(logoutThunk());
-          navigate("/house/login");
-        }}
-      >
-        {" "}
-        Logout
-      </button>
-      
+        <button className="btn btn-primary m-2"
+          onClick={async() => {
+            await dispatch(logoutThunk());
+            navigate("/house/login");
+        }}>{" "}Logout</button>
       <button onClick={save} className="btn btn-primary m-2">Save </button>
+     
+
     </div>
+    
   ); 
 }
 export default ProfileScreen;

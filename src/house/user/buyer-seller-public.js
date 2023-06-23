@@ -4,11 +4,11 @@ function BuyerSellerPublicInfo(reqProfile) {
         <div>
           <div>
             <label for="firstname" className ="fs-5">First Name</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + reqProfile.firstName}</span>
+            <span className = "text-primary font-italic form-control bg-light">{" " + reqProfile.first_name}</span>
           </div>
           <div>
             <label for="lastname" className ="fs-5">Last Name</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + reqProfile.lastName}</span>
+            <span className = "text-primary font-italic form-control bg-light">{" " + reqProfile.last_name}</span>
           </div>
           <div>
             <label className ="fs-5">Role</label>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk, logoutThunk, profileThunk, updateUserThunk, registerThunk, viewProfileThunk } from "../services/auth-thunks";
+import { loginThunk, logoutThunk, profileThunk, updateUserThunk, registerThunk, viewProfileThunk, viewTopAgentThunk } from "../services/auth-thunks";
 
 
 const authSlice = createSlice({

@@ -22,11 +22,11 @@ const NavigationSidebar = () => {
                 {/* {currentUser && <Link className="list-group" to="/house/profile"> Profile </Link>} */}
 
             </div>
-            <div>
+            {/* <div>
                 <button type="button" className="btn btn-primary rounded-pill w-100">
                     <span className="text-break">Tweet</span>
                 </button>
-            </div>
+            </div> */}
         </>
     );
 };
