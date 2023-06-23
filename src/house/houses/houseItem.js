@@ -47,7 +47,7 @@ const HouseItem = ({ house, isSaved = false }) => {
         <div className="card" onClick={() => setModalShow(true)}>
           <div className="">
             <img
-              src={`/images/${house.images[0]}`}
+              src={`data:image/png;base64,${house.imageStrings[0]}`}
               className="card-img-top position-relative"
               alt="..."
               style={{ width: "100%", height: "200px" }}
@@ -110,11 +110,11 @@ const HouseItem = ({ house, isSaved = false }) => {
               width="100%"
               title={house._id}
             />
-            {house.images.map((image) => (
+            {house.imageStrings.map((imageString) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src={`/images/${image}`}
+                  src={`data:image/png;base64,${imageString}`}
                   alt=""
                   style={{ width: "100%", height: "500px" }}
                 />

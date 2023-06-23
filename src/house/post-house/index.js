@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import * as formik from "formik";
 import * as yup from "yup";
-import { createHouseThunk } from "../services/houses-thunks";
+import { createHouseThunk, uploadImagesThunk } from "../services/houses-thunks";
 import { useSelector } from "react-redux";
 
 const PostHouse = () => {
@@ -60,18 +60,18 @@ const PostHouse = () => {
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 let formData = new FormData();
-                formData.append("file", values.images);
-                // need api support here @vincentli1994
                 let images = [];
                 for (const image of values.images) {
+                  formData.append("images", image);
                   images.push(image.name);
                 }
-                values.images = ["house1.jpeg"];
+                values.images = images;
                 values = {
                   ...values,
                   agent: currentUser._id,
                   date_posted: new Date(),
                 };
+                dispatch(uploadImagesThunk(formData));
                 dispatch(createHouseThunk(values));
                 setSubmitting(false);
                 handleClose();
@@ -353,34 +353,3 @@ const PostHouse = () => {
   );
 };
 export default PostHouse;
-
-{
-  /* <div className="row">
-            <div className="col-auto">
-                <img src="/images/nasa.png" width={60} />
-            </div>
-            <div className="col-10">
-                <textarea value={whatsHappening} placeholder="What's happening?"
-                    className="form-control border-0"
-                    onChange={(event) => setWhatsHappening(event.target.value)}>
-                </textarea>
-                <div>
-                    <button className="rounded-pill btn btn-primary float-end mt-2 ps-3 pe-3 fw-bold"
-                        onClick={tuitClickHandler}>
-                        Tuit
-                    </button>
-                    <div className="text-primary fs-2">
-                        <AiOutlinePicture className="me-3" />
-                        <HiOutlineGif className="me-3" />
-                        <MdFormatListBulleted className="me-3" />
-                        <BsEmojiSmile className="me-3" />
-                        <TbCalendarStats className="me-3" />
-                        <HiOutlineLocationMarker className="me-3" />
-                        <BiBold className="me-3" />
-                        <BiItalic className="me-3" />
-                    </div>
-                </div>
-            </div>
-            <div className="col-12"><hr /></div>
-        </div> */
-}
