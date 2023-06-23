@@ -11,12 +11,22 @@ export const createHouse = async (house) => {
   const street = house.address.trim().split(" ").join("%20");
   const address = `${street}%20${house.city.trim()}%20${house.state.trim()}`;
   const res = await axios.get(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.googleApiKey}`
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
   );
   house.latitude = res.data.results[0].geometry.location.lat;
   house.longitude = res.data.results[0].geometry.location.lng;
   const response = await axios.post(HOUSE_API, house);
   return response.data;
+};
+
+export const uploadimages = async (formData) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+  const response = await axios.post(`${HOUSE_API}/images/upload`, formData, config)
+  return response.status;
 };
 
 export const findHouses = async () => {
