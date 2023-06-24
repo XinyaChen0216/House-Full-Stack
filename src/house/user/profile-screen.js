@@ -93,12 +93,13 @@ function ProfileScreen() {
           {profile.role === "agent" && <PostedHouseList />}
         </div>
       )}
-        <button className="btn btn-primary m-2"
+        <button className="btn btn-primary mt-2"
           onClick={async() => {
             await dispatch(logoutThunk());
             navigate("/house/login");
         }}>{" "}Logout</button>
-      <button onClick={save} className="btn btn-primary m-2">Save </button>
+        <span> </span>
+      <button onClick={save} className="btn btn-primary mt-2">Save </button>
      
 
     </div>

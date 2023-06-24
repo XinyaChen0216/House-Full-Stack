@@ -9,7 +9,7 @@ import Notifications from "./notifications-screen";
 import Messages from "./messages-screen";
 import List from "./lists-screen";
 import More from "./more-screen";
-import WhoToFollowList from "./who-to-follow-list";
+import WhoToFollowList from "./top-agents-list";
 import whoReducer from "./reducers/who-reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
