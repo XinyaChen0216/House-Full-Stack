@@ -33,6 +33,14 @@ export const updateUserThunk = createAsyncThunk(
   }
 );
 
+// export const followThunk = createAsyncThunk(
+//   "user/followUser",
+//   async (user) => {
+//     await authService.followUser(user);
+//     return user;
+//   }
+// );
+
 export const registerThunk = createAsyncThunk(
   "user/register",
   async (credentials) => {
