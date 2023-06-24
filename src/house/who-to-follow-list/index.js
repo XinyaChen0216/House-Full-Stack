@@ -1,9 +1,14 @@
-import React from "react";
-// import whoArray from './who.json';
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { viewTopAgentThunk } from "../services/auth-thunks";
 import WhoToFollowListItem from "./who-to-follow-list-item";
+
 const WhoToFollowList = () => {
-    const whoArray = useSelector((state) => state.who);
+    const dispatch = useDispatch();
+    const { agent } = useSelector((state) => state.who);
+    
+    useEffect(() => {
+        dispatch(viewTopAgentThunk())}, [])
 
     return (
         <ul className="list-group mt-2">
@@ -11,10 +16,10 @@ const WhoToFollowList = () => {
                 <h3>Top 3 Agents</h3>
             </li>
             {
-                whoArray.map(who =>
-                    <WhoToFollowListItem
-                        key={who._id}
-                        who={who} />
+                agent.map(who =>
+                  <WhoToFollowListItem 
+                  key={who.username}
+                  who={who} />
                 )
             }
         </ul>

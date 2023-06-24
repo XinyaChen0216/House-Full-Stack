@@ -1,52 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import {
-  logoutThunk,
-  updateUserThunk,
-} from "../services/auth-thunks";
+import AgentPublicInfo from "./agent-public";
+import BuyerSellerPublicInfo from "./buyer-seller-public";
+import ProfileScreen from "./profile-screen";
+
 function OtherProfileScreen() {
   const { currentUser, requestedUser } = useSelector((state) => state.user);
-  // console.log(JSON.stringify(currentUser));
-  // console.log(JSON.stringify(requestedUser))
-  const [profile, setProfile] = useState(requestedUser);
+  const [reqProfile, setReqProfile] = useState(requestedUser);
+  const [currentProfile, setCurrProfile] = useState(currentUser);
+
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(()=>{
-    setProfile(requestedUser)
+    setReqProfile(requestedUser)
   }, [requestedUser])
+   
+  
   return (
     <div>
-      <h1>Profile Screen</h1>
-      {profile && (
-        <div>
-          <div>
-            <label for="firstname" className ="fs-5">First Name</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.first_name}</span>
-          </div>
-          <div>
-            <label for="lastname" className ="fs-5">Last Name</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.last_name}</span>
-          </div>
-          <div>
-            <label for="phone" className ="fs-5">Phone Number</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.phone}</span>
-          </div>
-          <div>
-            <label for="email" className ="fs-5 col">Email</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.email}</span> 
-          </div>
-          <div>
-            <label className ="fs-5">Role</label>
-            <span className = "text-primary font-italic form-control bg-light">{" " + profile.role}</span>
-          </div>
-        </div>
-      )}
-      <button className="btn btn-primary m-2"
+      <h1> {reqProfile.first_name}'s Profile</h1>
+      
+      {reqProfile.role === "agent" && AgentPublicInfo(reqProfile)}
+      {reqProfile.role === "buyer" && BuyerSellerPublicInfo(reqProfile)}
+      {reqProfile.role === "seller" && BuyerSellerPublicInfo(reqProfile)}
+      
+      <div >
+      <button className="btn btn-primary mt-2"
+        onClick={async() => {
+          navigate("/house/home");
+        }}>Follow</button>
+      <span> </span>
+      <button className="btn btn-primary mt-2"
         onClick={async() => {
           navigate("/house/home");
         }}>Finish</button>
+      </div>
     </div>
   ); 
+
 }
 export default OtherProfileScreen;

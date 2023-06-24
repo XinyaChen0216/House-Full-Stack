@@ -23,6 +23,11 @@ export const viewOtherProfile = async (username) => {
     return response.data;
 };
 
+export const viewTopAgents = async () => {
+    const response = await api.get(`${USERS_URL}/topagents`);
+    return response.data;
+};
+
 export const updateUser = async (user) => {
     const response = await api.put(`${USERS_URL}/${user._id}`, user);
     return response.data;
