@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import whoArray from "./who.json";
+import { viewTopAgentThunk } from "../services/auth-thunks";
 
 const whoSlice = createSlice({
     name: "who",
-    initialState: whoArray
+    initialState: { agent:[] },
+    reducers: {},
+    extraReducers: {
+        [viewTopAgentThunk.fulfilled]: (state, { payload }) => {
+            state.agent = payload;
+        },
+    },
 });
 
 export default whoSlice.reducer;
