@@ -9,14 +9,10 @@ import { deleteHouse } from "../reducers/houses-reducer";
 import { useSelector } from "react-redux";
 import { updateUserThunk } from "../services/auth-thunks";
 
-import { BsFillHouseHeartFill, BsFillCalendarWeekFill } from "react-icons/bs"
-import { GrView } from "react-icons/gr"
-import { RxDotFilled } from "react-icons/rx"
-import Button from 'react-bootstrap/Button';
-import { Link, Navigate } from "react-router-dom";
-
-
-
+import { BsFillHouseHeartFill, BsFillCalendarWeekFill } from "react-icons/bs";
+import { GrView } from "react-icons/gr";
+import { RxDotFilled } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -52,16 +48,25 @@ const HouseItem = ({ house, isSaved = false }) => {
     <>
       <li
         className="list-group-item border border-0 p-0 pb-1 pe-1"
-        style={{ width: "19rem" }}
+        style={{ width: "19rem", height: "305px" }}
       >
         <div className="card" onClick={() => setModalShow(true)}>
           <div className="">
-            <img
-              src={`data:image/png;base64,${house.imageStrings[0]}`}
-              className="card-img-top position-relative"
-              alt="..."
-              style={{ width: "100%", height: "200px" }}
-            />
+            {(!house.isPublic && (
+              <img
+                src={`data:image/png;base64,${house.imageStrings[0]}`}
+                className="card-img-top position-relative"
+                alt="..."
+                style={{ width: "100%", height: "200px" }}
+              />
+            )) || (
+              <img
+                src={`${house.images[0]}`}
+                className="card-img-top position-relative"
+                alt="..."
+                style={{ width: "100%", height: "200px" }}
+              />
+            )}
             <span
               className="float-end position-absolute top-0 end-0 pe-2 pt-2"
               onClick={(event) => deletePostHandler(event, house._id)}
@@ -72,12 +77,10 @@ const HouseItem = ({ house, isSaved = false }) => {
               className="float-end position-absolute top-0 start-0 ps-2 pt-2"
               onClick={(event) => savePostHandler(event)}
             >
-
-              {isSaved && <FaHeart className="text-danger" /> || <FaRegHeart />}
-
-
+              {(isSaved && <FaHeart className="text-danger" />) || (
+                <FaRegHeart />
+              )}
             </span>
-
           </div>
           <div className="card-body pb-1">
             <h5 className="card-title">Price: ${house.price}</h5>
@@ -89,7 +92,7 @@ const HouseItem = ({ house, isSaved = false }) => {
             </div>
           </div>
         </div>
-      </li >
+      </li>
       <Modal
         size="lg"
         scrollable="true"
@@ -122,16 +125,27 @@ const HouseItem = ({ house, isSaved = false }) => {
               width="100%"
               title={house._id}
             />
-            {house.imageStrings.map((imageString) => (
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src={`data:image/png;base64,${imageString}`}
-                  alt=""
-                  style={{ width: "100%", height: "500px" }}
-                />
-              </Carousel.Item>
-            ))}
+            {(!house.isPublic &&
+              house.imageStrings.map((imageString) => (
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={`data:image/png;base64,${imageString}`}
+                    alt=""
+                    style={{ width: "100%", height: "500px" }}
+                  />
+                </Carousel.Item>
+              ))) ||
+              house.images.map((image) => (
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={image}
+                    alt=""
+                    style={{ width: "100%", height: "500px" }}
+                  />
+                </Carousel.Item>
+              ))}
           </Carousel>
           <h3>
             <div className="mb-1">
@@ -186,7 +200,7 @@ const HouseItem = ({ house, isSaved = false }) => {
       >
         <div
           className="modal show"
-          style={{ display: 'block', position: 'initial' }}
+          style={{ display: "block", position: "initial" }}
         >
           <Modal.Dialog>
             <Modal.Header closeButton>
@@ -198,18 +212,28 @@ const HouseItem = ({ house, isSaved = false }) => {
             </Modal.Body>
             <Modal.Footer>
               <div className="list-group ">
-                {<Link className="list-group-item mb-2 btn btn-primary rounded-pill float-end" to="/house/login">   Login   </Link>}
-                {<Link className="list-group-item btn btn-primary rounded-pill float-end" to="/house/register">Register</Link>}
-
+                {
+                  <Link
+                    className="list-group-item mb-2 btn btn-primary rounded-pill float-end"
+                    to="/house/login"
+                  >
+                    {" "}
+                    Login{" "}
+                  </Link>
+                }
+                {
+                  <Link
+                    className="list-group-item btn btn-primary rounded-pill float-end"
+                    to="/house/register"
+                  >
+                    Register
+                  </Link>
+                }
               </div>
             </Modal.Footer>
-
           </Modal.Dialog>
         </div>
-
-
-      </Modal >
-
+      </Modal>
     </>
   );
 };
