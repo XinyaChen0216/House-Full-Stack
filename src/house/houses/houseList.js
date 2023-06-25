@@ -27,7 +27,7 @@ const HouseList = () => {
   } else generalHouses = totalHouses;
   useEffect(() => {
     dispatch(findHousesThunk());
-    //setTimeout(() => dispatch(findPublicHousesThunk()), 500);
+    setTimeout(() => dispatch(findPublicHousesThunk()), 500);
   }, [reload]);
   return (
     <>
