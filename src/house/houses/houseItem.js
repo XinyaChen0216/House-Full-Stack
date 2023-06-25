@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
   const [anonymousUserModalShow, setAnonymousUserModalShow] = useState(false);
+  const [agentModalShow, setAgentModalShow] = useState(false);
 
   const dispatch = useDispatch();
   const deletePostHandler = (event, id) => {
@@ -26,7 +27,7 @@ const HouseItem = ({ house, isSaved = false }) => {
   const { currentUser } = useSelector((state) => state.user);
   const savePostHandler = async (event) => {
     event.stopPropagation();
-    if (currentUser) {
+    if (currentUser.role === 'buyer' || currentUser.role === 'seller') {
       let currSavedHouses = [...currentUser.saved_houses];
 
       const idx = currSavedHouses.findIndex((curr) => curr === house._id);
@@ -40,6 +41,8 @@ const HouseItem = ({ house, isSaved = false }) => {
         saved_houses: [...currSavedHouses],
       };
       await dispatch(updateUserThunk(newProfile));
+    } else if (currentUser.role === 'agent') {
+      setAgentModalShow(true);
     } else {
       setAnonymousUserModalShow(true);
     }
@@ -60,13 +63,13 @@ const HouseItem = ({ house, isSaved = false }) => {
                 style={{ width: "100%", height: "200px" }}
               />
             )) || (
-              <img
-                src={`${house.images[0]}`}
-                className="card-img-top position-relative"
-                alt="..."
-                style={{ width: "100%", height: "200px" }}
-              />
-            )}
+                <img
+                  src={`${house.images[0]}`}
+                  className="card-img-top position-relative"
+                  alt="..."
+                  style={{ width: "100%", height: "200px" }}
+                />
+              )}
             <span
               className="float-end position-absolute top-0 end-0 pe-2 pt-2"
               onClick={(event) => deletePostHandler(event, house._id)}
@@ -234,6 +237,50 @@ const HouseItem = ({ house, isSaved = false }) => {
           </Modal.Dialog>
         </div>
       </Modal>
+
+      <Modal
+        size="sm"
+        // scrollable="false"
+        show={agentModalShow}
+        onHide={() => setAgentModalShow(false)}
+      >
+        <div
+          className="modal show"
+          style={{ display: "block", position: "initial" }}
+        >
+          <Modal.Dialog>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Attention</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p>Agent cannot save houses!</p>
+            </Modal.Body>
+            {/* <Modal.Footer>
+              <div className="list-group ">
+                {
+                  <Link
+                    className="list-group-item mb-2 btn btn-primary rounded-pill float-end"
+                    to="/house/login"
+                  >
+                    {" "}
+                    Login{" "}
+                  </Link>
+                }
+                {
+                  <Link
+                    className="list-group-item btn btn-primary rounded-pill float-end"
+                    to="/house/register"
+                  >
+                    Register
+                  </Link>
+                }
+              </div>
+            </Modal.Footer> */}
+          </Modal.Dialog>
+        </div>
+      </Modal>
+
     </>
   );
 };
