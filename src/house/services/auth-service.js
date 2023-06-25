@@ -38,12 +38,6 @@ export const updateUser = async (user) => {
     return response.data;
 };
 
-
-// export const followUser = async (user) => {
-//     const response = await api.put(`${USERS_URL}/${user._id}`, user);
-//     return response.data;
-// };
-
 export const register = async ({ username, password, email, role }) => {
     console.log({
         username: username,
