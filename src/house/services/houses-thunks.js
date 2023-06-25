@@ -12,6 +12,11 @@ export const findPublicHousesThunk = createAsyncThunk(
   async () => await service.findPublicHouses()
 );
 
+export const findPublicHousesBySearchThunk = createAsyncThunk(
+  "houses/findPublicHousesBySearch",
+  async (args) => await service.findPublicHousesBySearch(args)
+);
+
 export const deleteHouseThunk = createAsyncThunk(
   "houses/deleteHouse",
   async (houseId) => {
