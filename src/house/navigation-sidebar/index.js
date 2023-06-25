@@ -7,7 +7,7 @@ import {
     faMagnifyingGlass,
     faRectangleAd,
     faUser,
-    faRegistered
+    faRightToBracket
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useNavigate } from "react-router";
@@ -53,7 +53,7 @@ const NavigationSidebar = () => {
 
                     <Link className={`list-group-item text-capitalize ${active === "register" ? "active" : ""
                         } d-flex align-items-center`} to="/house/register" >
-
+                        <FontAwesomeIcon icon="fa-light fa-right-to-bracket" />
                         Register
                     </Link>
                 )}
