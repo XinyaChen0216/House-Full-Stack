@@ -6,7 +6,6 @@ import { findHousesThunk } from "../services/houses-thunks";
 const PostedHouseList = () => {
   const { houses, loading } = useSelector((state) => state.houses);
   const { currentUser } = useSelector((state) => state.user);
-  // console.log(JSON.stringify(houses))
   const dispatch = useDispatch();
   let postedHouses = [];
   if (currentUser) {
@@ -15,12 +14,7 @@ const PostedHouseList = () => {
         postedHouses.push(house);
       } 
     });
-  } 
-
-  
-  // console.log(houses)
-  // console.log(savedHouses)
-  // console.log(generalHouses)
+  } else generalHouses = houses;
   useEffect(() => {
     dispatch(findHousesThunk())
   }, [])

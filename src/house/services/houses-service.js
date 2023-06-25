@@ -35,7 +35,7 @@ export const uploadimages = async (formData) => {
 export const findPublicHouses = async () => {
   const config = {
     method: "get",
-    url: "https://us-real-estate.p.rapidapi.com/v3/for-sale?state_code=WA&sort=newest&limit=10property_type=single_family",
+    url: "https://us-real-estate.p.rapidapi.com/v3/for-sale?state_code=WA&sort=newest&limit=10&property_type=single_family",
     headers: {
       "X-RapidAPI-Key": `${process.env.REACT_APP_RAPID_API_KEY}`,
       "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
@@ -46,31 +46,88 @@ export const findPublicHouses = async () => {
   let modPublicHouses = [];
   if (publicHouses.length > 0) {
     publicHouses.map(item => {
-      let curr = {
-        _id: item.property_id,
-        address: item.location.address.line,
-        city: item.location.address.city,
-        state: item.location.address.state_code,
-        zipcode: item.location.address.postal_code,
-        bedrooms: item.description.beds,
-        bathrooms: item.description.baths,
-        size: item.description.sqft,
-        price: item.list_price,
-        type: item.description.type,
-        year: item.description.year_built,
-        status: "active",
-        images:
-          item.photos && item.photos.length > 0
-            ? item.photos.map((photo) => photo.href)
-            : ["/images/house1.jpeg"],
-        date_posted: new Date(item.list_date),
-        overview: item.tags.toString(),
-        latitude: item.location.address.coordinate.lat,
-        longitude: item.location.address.coordinate.lon,
-        agent: "64938373230f0cc1060ccf65",
-        isPublic: true,
-      };
-      modPublicHouses.push(curr);
+      let flag = true;
+      let curr;
+      try {
+        curr = {
+          _id: item.property_id,
+          address: item.location.address.line,
+          city: item.location.address.city,
+          state: item.location.address.state_code,
+          zipcode: item.location.address.postal_code,
+          bedrooms: item.description.beds,
+          bathrooms: item.description.baths,
+          size: item.description.sqft,
+          price: item.list_price,
+          type: item.description.type,
+          year: item.description.year_built,
+          status: "active",
+          images:
+            item.photos && item.photos.length > 0
+              ? item.photos.map((photo) => photo.href)
+              : ["/images/house1.jpeg"],
+          date_posted: new Date(item.list_date),
+          overview: item.tags.toString(),
+          latitude: item.location.address.coordinate.lat,
+          longitude: item.location.address.coordinate.lon,
+          agent: "64938373230f0cc1060ccf65",
+          isPublic: true,
+        };
+      } catch (error) {
+        flag = false;
+      }
+      if (flag) modPublicHouses.push(curr);
+    });
+  }
+  return modPublicHouses;
+};
+
+export const findPublicHousesBySearch = async (args) => {
+  const{ city, state, zipcode } = args;
+  const config = {
+    method: "get",
+    url: `https://us-real-estate.p.rapidapi.com/v3/for-sale?state_code=${state}&city=${city}&location=${zipcode}&sort=newest&limit=10`,
+    headers: {
+      "X-RapidAPI-Key": `${process.env.REACT_APP_RAPID_API_KEY}`,
+      "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
+    },
+  };
+  const response = await axios(config);
+  const publicHouses = response.data.data.home_search.results;
+  let modPublicHouses = [];
+  if (publicHouses.length > 0) {
+    publicHouses.map(item => {
+      let flag = true;
+      let curr;
+      try {
+        curr = {
+          _id: item.property_id,
+          address: item.location.address.line,
+          city: item.location.address.city,
+          state: item.location.address.state_code,
+          zipcode: item.location.address.postal_code,
+          bedrooms: item.description.beds,
+          bathrooms: item.description.baths,
+          size: item.description.sqft,
+          price: item.list_price,
+          type: item.description.type,
+          year: item.description.year_built,
+          status: "active",
+          images:
+            item.photos && item.photos.length > 0
+              ? item.photos.map((photo) => photo.href)
+              : ["/images/house1.jpeg"],
+          date_posted: new Date(item.list_date),
+          overview: item.tags.toString(),
+          latitude: item.location.address.coordinate.lat,
+          longitude: item.location.address.coordinate.lon,
+          agent: "64938373230f0cc1060ccf65",
+          isPublic: true,
+        };
+      } catch (error) {
+        flag = false;
+      }
+      if (flag) modPublicHouses.push(curr);
     });
   }
   return modPublicHouses;

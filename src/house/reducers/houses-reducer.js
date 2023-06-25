@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import houses from "./houses.json";
 import Fuse from "fuse.js";
 import {
   createHouseThunk,
   findHousesThunk,
   findPublicHousesThunk,
+  findPublicHousesBySearchThunk
 } from "../services/houses-thunks";
 const initialState = {
-  // houses: houses,
   houses: [],
   publicHouses: [],
+  publicHousesBySearch: [],
   loading: false,
   reload: false,
 };
@@ -49,6 +49,18 @@ const housesSlice = createSlice({
       state.publicHouses = payload;
     },
     [findPublicHousesThunk.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [findPublicHousesBySearchThunk.pending]: (state) => {
+      state.loading = true;
+      state.publicHousesBySearch = [];
+    },
+    [findPublicHousesBySearchThunk.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.publicHousesBySearch = payload;
+    },
+    [findPublicHousesBySearchThunk.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },
