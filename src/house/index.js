@@ -3,7 +3,7 @@ import NavigationSidebar from "./navigation-sidebar";
 import HomeScreen from "./home-screen";
 import ProfileScreen from "./user/profile-screen";
 import OtherProfileScreen from "./user/other-profile-screen";
-import WhoToFollowList from "./who-to-follow-list";
+import WhoToFollowList from "./top-agents-list";
 import whoReducer from "./reducers/who-reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -16,6 +16,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import { PersistGate } from "redux-persist/integration/react";
 import Search from "./search"
+import FollowerList from "./followers-list";
 
 const persistConfig = {
   key: "root",
@@ -55,6 +56,7 @@ function House() {
             </div>
             <div className="col-4 d-none d-md-none d-lg-block">
               <WhoToFollowList />
+              <FollowerList />
             </div>
           </div>
         </div>
