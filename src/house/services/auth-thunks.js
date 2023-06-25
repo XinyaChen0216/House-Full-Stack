@@ -9,6 +9,10 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
+export const findAllUserThunk = createAsyncThunk("auth/users", async () => {
+  return await authService.findAllUser();
+});
+
 export const profileThunk = createAsyncThunk("auth/profile", async () => {
   return await authService.profile();
 });
@@ -32,14 +36,6 @@ export const updateUserThunk = createAsyncThunk(
     return user;
   }
 );
-
-// export const followThunk = createAsyncThunk(
-//   "user/followUser",
-//   async (user) => {
-//     await authService.followUser(user);
-//     return user;
-//   }
-// );
 
 export const registerThunk = createAsyncThunk(
   "user/register",

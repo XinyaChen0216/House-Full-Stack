@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { loginThunk } from "../services/auth-thunks";
 import AgentPublicInfo from "./agent-public";
 import BuyerSellerPublicInfo from "./buyer-seller-public";
-import ProfileScreen from "./profile-screen";
 import { updateUserThunk } from "../services/auth-thunks";
 import {RiUserFollowFill} from "react-icons/ri";
 
@@ -17,28 +16,39 @@ function OtherProfileScreen() {
 
   const followUserHandler = async () => {
     if (currentUser && requestedUser){
+      //add current user to requested User's following list
       let currFollowing = [...currentUser.following];
-      const followIdx = currFollowing.findIndex((curr) => curr === requestedUser._id);
-      if (followIdx >= 0) {
-        currFollowing.splice(followIdx, 1);
-      } else {
+      // const followIdx = currFollowing.findIndex((curr) => curr === requestedUser._id);
+      // if (followIdx >= 0) {
+      //   currFollowing.splice(followIdx, 1);
+      // } else {
         currFollowing.push(requestedUser._id);
-      }
-      console.log(currFollowing);
+      // }
+      //console.log(currFollowing);
       let newFollowing = {
         ...currentUser,
         following: [...currFollowing],
       };
+      console.log("we need to add this to the current user's following array");
+      console.log(currFollowing);
+      let reqFollowers = [...requestedUser.followers];
+      const followerIdx = reqFollowers.findIndex((curr) => curr === currentUser._id);
+      if (followerIdx >= 0) {
+        reqFollowers.splice(followerIdx, 1);
+      } else {
+        reqFollowers.push(currentUser._id);
+      }
       
-      let reqFollowers = requestedUser.followers;
-      reqFollowers = reqFollowers + 1;
-      let updatedReqFollowers = {
+      let newFollowers = {
         ...requestedUser,
-        followers: reqFollowers,
+        followers: [...reqFollowers],
       };
-      await dispatch(updateUserThunk(updatedReqFollowers));
-      console.log(requestedUser.followers)
+      
+      console.log("we need to add this to requested users' followers array")
+      console.log(reqFollowers);
+      await dispatch(updateUserThunk(newFollowers));
       await dispatch(updateUserThunk(newFollowing));
+
       
     } else {
       await dispatch(loginThunk());
@@ -49,24 +59,22 @@ function OtherProfileScreen() {
   const unFollowUserHandler = async () => {
     if (currentUser && requestedUser){
       let currFollowing = [...currentUser.following];
-      //const followIdx = currFollowing.findIndex((curr) => curr === requestedUser._id);
-      // if (followIdx >= 0) {
-      //   currFollowing.splice(followIdx, 1);
-      // } else {
       currFollowing.pop(requestedUser._id);
-      // }
       let newFollowing = {
         ...currentUser,
         following: [...currFollowing],
       };
-      let reqFollowers = requestedUser.followers;
-      reqFollowers = reqFollowers - 1;
-      console.log(reqFollowers);
-      let updatedReqFollowers = {
+
+      let reqFollowers = [...requestedUser.followers];
+      reqFollowers.pop(currentUser._id);
+      let newFollowers = {
         ...requestedUser,
-        followers: reqFollowers,
+        followers: [...reqFollowers],
       };
-      await dispatch(updateUserThunk(updatedReqFollowers));
+
+      console.log(reqFollowers);
+
+      await dispatch(updateUserThunk(newFollowers));
       await dispatch(updateUserThunk(newFollowing));
     } else {
       await dispatch(loginThunk());
@@ -93,14 +101,14 @@ function OtherProfileScreen() {
       </div>
       <div>
       {( !currentUser.following.includes(requestedUser._id) && ( <button className="btn btn-primary mt-2"
-        onClick={(event) => {
-          followUserHandler(event);
-        }}>Follow</button>))}
+        onClick={(event) => 
+          followUserHandler(event)
+        }>Follow</button>))}
 
       {( currentUser.following.includes(requestedUser._id) && ( <button className="btn btn-primary mt-2"
-        onClick={(event) => {
-          unFollowUserHandler(event);
-        }}>Unfollow</button>))}
+        onClick={(event) => 
+          unFollowUserHandler(event)
+        }>Unfollow</button>))}
      
       <span> </span>
       
