@@ -5,16 +5,16 @@ import Search from "../search/index";
 import { useSelector } from "react-redux";
 
 const HomeScreen = () => {
-  const { currentUser } = useSelector((state) => state.user);
-  return (
-    <>
-      <div className="d-flex justify-content-between mb-2 mt-2">
-        <h4>Home</h4>
-        {currentUser && <h4>Welcome {currentUser.username}</h4>}
-        {currentUser && currentUser["role"] === "agent" && <PostHouse />}
-      </div>
-      <HouseList />
-    </>
-  );
+    const { currentUser } = useSelector((state) => state.user);
+    return (
+        <>
+            <div className="d-flex justify-content-between mb-2">
+                <h1>Home</h1>
+                {currentUser && <h4>Welcome {currentUser.username}</h4>}
+                {currentUser && currentUser["role"] === "agent" && <PostHouse />}
+            </div>
+            <HouseList />
+        </>
+    );
 };
 export default HomeScreen;

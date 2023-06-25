@@ -29,8 +29,9 @@ const Search = () => {
     // dispatch(findPublicHousesThunk());
   }, []);
   return (
-    <>
-      <h4>Search</h4>
+    <><div>
+      <h1>Search</h1>
+    </div>
       <Formik
         validationSchema={schema}
         initialValues={{
