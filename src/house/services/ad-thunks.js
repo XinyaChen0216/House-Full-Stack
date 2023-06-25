@@ -4,13 +4,13 @@ import * as service from "./ad-service";
 
 export const findAdsThunk = createAsyncThunk(
     "ad/findAd",
-    async () => await service.findAds()
+    async () => await service.findAdvertisements()
 );
 
 export const deleteAdThunk = createAsyncThunk(
     "ad/deleteAd",
     async (adid) => {
-        await service.deleteAd(adid);
+        await service.deleteAdvertisement(adid);
         return adid;
     }
 );
@@ -18,7 +18,7 @@ export const deleteAdThunk = createAsyncThunk(
 export const createAdThunk = createAsyncThunk(
     "ad/createAd",
     async (ad) => {
-        const newAd = await service.createAd(ad);
+        const newAd = await service.createAdvertisement(ad);
         return newAd;
     }
 );
@@ -33,7 +33,7 @@ export const uploadImagesThunk = createAsyncThunk(
 
 export const updateAdThunk = createAsyncThunk(
     "ads/updateAd",
-    async (ad) => await service.updateAd(ad)
+    async (ad) => await service.updateAdvertisement(ad)
 );
 
 export const loginThunk = createAsyncThunk(

@@ -9,6 +9,7 @@ const AdList = () => {
     const { ads, loading, reload } = useSelector(
         (state) => state.ads
     );
+    // console.log(ads);
     const dispatch = useDispatch();
 
     let totalAds = [...ads];

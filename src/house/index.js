@@ -8,6 +8,7 @@ import whoReducer from "./reducers/who-reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import houseReducer from "./reducers/houses-reducer";
+import adReducer from "./reducers/ad-reducer";
 import authReducer from "./reducers/auth-reducer";
 import RegisterScreen from "./user/register-screen";
 import LoginScreen from "./user/login-screen";
@@ -37,6 +38,7 @@ const store = configureStore({
         who: whoReducer,
         houses: persistedHouseReducer,
         user: persistedAuthReducer,
+        ads: adReducer
     },
     middleware: [thunk],
 });

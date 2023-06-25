@@ -22,58 +22,44 @@ const AdItem = ({ ad }) => {
         event.stopPropagation();
         dispatch(deleteAd(id));
     };
+
     return (
-        <>
-            <li
-                className="list-group-item border border-0 p-0 pb-1 pe-1"
-                style={{ width: "19rem", height: "305px" }}
-            >
-                <div className="card" onClick={() => setModalShow(true)}>
-                    <div className="">
-                        {/* {(!house.isPublic && (
-                            <img */}
-                        src={`data:image/png;base64,${ad.imageStrings[0]}`}
+        <li
+            className="list-group-item border border-0 p-0 pb-1 pe-1"
+            style={{ width: "19rem", height: "305px" }}
+        >
+            <div className="card" onClick={() => setModalShow(true)}>
+                <div className="">
+
+                    <img
+                        src={`data:image/png;base64,${ad.image}`}
                         className="card-img-top position-relative"
                         alt="..."
                         style={{ width: "100%", height: "200px" }}
-                        {/* />
-                        )) || (
-                        <img
-                            src={`${ad.images[0]}`}
-                            className="card-img-top position-relative"
-                            alt="..."
-                            style={{ width: "100%", height: "200px" }}
-                        />
-                            )} */}
-                        <span
-                            className="float-end position-absolute top-0 end-0 pe-2 pt-2"
-                            onClick={(event) => deletePostHandler(event, ad._id)}
-                        >
-                            <RxCross1 />
-                        </span>
-                        {/* <span
-                            className="float-end position-absolute top-0 start-0 ps-2 pt-2"
-                            onClick={(event) => savePostHandler(event)}
-                        >
-                            {(isSaved && <FaHeart className="text-danger" />) || (
-                                <FaRegHeart />
-                            )}
-                        </span> */}
-                    </div>
-                    <div className="card-body pb-1">
-                        <h5 className="card-title">Agent</h5>
-                        <div className="card-text">
-                            <p className="mb-0">
-                                {/* {house.address}, {house.city}, {house.state} {house.zipcode} */}
-                            </p>
-                            {/* <p>{house.overview}</p> */}
-                        </div>
+                    />
+
+                    <span
+                        className="float-end position-absolute top-0 end-0 pe-2 pt-2"
+                        onClick={(event) => deletePostHandler(event, ad._id)}
+                    >
+                        <RxCross1 />
+                    </span>
+
+                </div>
+                <div className="card-body pb-1">
+                    <h5 className="card-title">{ad.first_name} {ad.last_name}</h5>
+                    <div className="card-text">
+                        <p className="mb-0">
+                            {ad.phone}
+                            <br />
+                            {ad.email}
+                        </p>
+                        {/* <p>{house.overview}</p> */}
                     </div>
                 </div>
-            </li>
-
-        </>
-    );
-};
+            </div>
+        </li>
+    )
+}
 
 export default AdItem;

@@ -48,7 +48,7 @@ const PostAd = () => {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                Post New House
+                Post New Advertisement
             </Button>
 
             <Modal

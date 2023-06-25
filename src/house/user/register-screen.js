@@ -53,6 +53,10 @@ function RegisterScreen() {
                     <input type="radio" id="agent" name="role" value="agent" onClick={(event) => setRole(event.target.value)} />
                     <label for="agent" className="mb-2">Agent</label>
                 </div>
+                <div>
+                    <input type="radio" id="admin" name="role" value="admin" onClick={(event) => setRole(event.target.value)} />
+                    <label for="admin" className="mb-2">Admin</label>
+                </div>
             </div>
         </div>
 
