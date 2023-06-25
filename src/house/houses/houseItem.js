@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
   const [anonymousUserModalShow, setAnonymousUserModalShow] = useState(false);
-  const agent = house.agent;
   const [agentModalShow, setAgentModalShow] = useState(false);
 
   const dispatch = useDispatch();
@@ -168,8 +167,9 @@ const HouseItem = ({ house, isSaved = false }) => {
             <div className="mb-2">
               
               <button type="button" class="btn btn-primary" onClick={async () => {
-                        await dispatch(viewProfileByIdThunk(agent.id));
-                        let url = '/house/profile/' + agent.username;
+
+                        await dispatch(viewProfileByIdThunk(house.agent));
+                        let url = '/house/profile/' + house.agent;
                         navigate(url);
                     }}>
                 Contact Agent
@@ -263,27 +263,6 @@ const HouseItem = ({ house, isSaved = false }) => {
             <Modal.Body>
               <p>Agent cannot save houses!</p>
             </Modal.Body>
-            {/* <Modal.Footer>
-              <div className="list-group ">
-                {
-                  <Link
-                    className="list-group-item mb-2 btn btn-primary rounded-pill float-end"
-                    to="/house/login"
-                  >
-                    {" "}
-                    Login{" "}
-                  </Link>
-                }
-                {
-                  <Link
-                    className="list-group-item btn btn-primary rounded-pill float-end"
-                    to="/house/register"
-                  >
-                    Register
-                  </Link>
-                }
-              </div>
-            </Modal.Footer> */}
           </Modal.Dialog>
         </div>
       </Modal>
