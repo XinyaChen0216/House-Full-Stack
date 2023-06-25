@@ -14,12 +14,12 @@ const PostedHouseList = () => {
         postedHouses.push(house);
       } 
     });
-  } else generalHouses = houses;
+  } 
   useEffect(() => {
     dispatch(findHousesThunk())
   }, [])
   if(postedHouses.length === 0){
-    return <h3>No Posted Houses Yet</h3>
+    return <h3>You have not posted any houses yet</h3>
   } else{
   return (
     <>
