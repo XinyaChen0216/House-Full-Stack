@@ -41,7 +41,7 @@ const HouseList = () => {
       <h3>Available Houses:</h3>
       <ul className="list-group d-flex flex-row flex-wrap justify-content-start">
         {generalHouses.map((house) => (
-          // console.log(JSON.stringify(house))
+          //console.log(JSON.stringify(house))
           <HouseItem house={house} />
         ))}
       </ul>

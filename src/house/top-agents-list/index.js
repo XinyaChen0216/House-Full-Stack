@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { viewTopAgentThunk } from "../services/auth-thunks";
-import WhoToFollowListItem from "./who-to-follow-list-item";
+import WhoToFollowListItem from "./top-agents-list-item";
 
 const WhoToFollowList = () => {
     const dispatch = useDispatch();

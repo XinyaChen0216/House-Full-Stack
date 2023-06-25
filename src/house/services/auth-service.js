@@ -9,6 +9,11 @@ export const login = async ({ username, password }) => {
     return response.data;
 };
 
+export const findAllUser = async () => {
+    const response = await api.get(`${USERS_URL}/users`);
+    return response.data;
+};
+
 export const logout = async () => {
     const response = await api.post(`${USERS_URL}/logout`);
     return response.data;
@@ -32,6 +37,7 @@ export const updateUser = async (user) => {
     const response = await api.put(`${USERS_URL}/${user._id}`, user);
     return response.data;
 };
+
 
 export const register = async ({ username, password, email, role }) => {
     console.log({

@@ -9,7 +9,7 @@ import Notifications from "./notifications-screen";
 import Messages from "./messages-screen";
 import List from "./lists-screen";
 import More from "./more-screen";
-import WhoToFollowList from "./who-to-follow-list";
+import WhoToFollowList from "./top-agents-list";
 import whoReducer from "./reducers/who-reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -21,6 +21,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import { PersistGate } from "redux-persist/integration/react";
+import FollowerList from "./followers-list";
 
 const persistConfig = {
   key: "root",
@@ -66,6 +67,7 @@ function House() {
             </div>
             <div className="col-4 d-none d-md-none d-lg-block">
               <WhoToFollowList />
+              <FollowerList />
             </div>
           </div>
         </div>
