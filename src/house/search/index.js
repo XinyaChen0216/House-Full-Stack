@@ -16,7 +16,13 @@ const Search = () => {
   const { houses, publicHousesBySearch, loading } = useSelector(
     (state) => state.houses
   );
-  const [dbHouses, setDBHouses] = useState();
+  let initDBHouses = [];
+  if (localStorage) {
+    let ls = localStorage.getItem('housesBySearch');
+    if (ls) initDBHouses = [...JSON.parse(ls)];
+  }
+  const [dbHouses, setDBHouses] = useState(initDBHouses);
+  console.log(dbHouses)
   const dispatch = useDispatch();
   const { Formik } = formik;
   const schema = yup.object().shape({
@@ -26,7 +32,6 @@ const Search = () => {
   });
   useEffect(() => {
     if (houses.length === 0) dispatch(findHousesThunk());
-    // dispatch(findPublicHousesThunk());
   }, []);
   return (
     <>
@@ -55,6 +60,7 @@ const Search = () => {
             }
           });
           setDBHouses(filteredHouses);
+          if (localStorage) localStorage.setItem('housesBySearch', JSON.stringify(filteredHouses));
           dispatch(
             findPublicHousesBySearchThunk({
               city: values.city.trim(),

@@ -15,19 +15,26 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import { PersistGate } from "redux-persist/integration/react";
-import Search from "./search"
+import Search from "./search";
 import FollowerList from "./followers-list";
 
 const persistConfig = {
-  key: "root",
+  key: "user",
   storage,
+  blacklist: ["users"],
+};
+const housePersistConfig = {
+  key: "house",
+  storage,
+  blacklist: ["publicHouses", "houses", "loading", "reload"],
 };
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedHouseReducer = persistReducer(housePersistConfig, houseReducer);
 
 const store = configureStore({
   reducer: {
     who: whoReducer,
-    houses: houseReducer,
+    houses: persistedHouseReducer,
     user: persistedAuthReducer,
   },
   middleware: [thunk],

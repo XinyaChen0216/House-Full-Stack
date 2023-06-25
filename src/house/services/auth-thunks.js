@@ -13,6 +13,10 @@ export const findAllUserThunk = createAsyncThunk("auth/users", async () => {
   return await authService.findAllUser();
 });
 
+export const findUserByIdThunk = createAsyncThunk("auth/users/id", async (id) => {
+  return await authService.findUserById(id);
+});
+
 export const profileThunk = createAsyncThunk("auth/profile", async () => {
   return await authService.profile();
 });
