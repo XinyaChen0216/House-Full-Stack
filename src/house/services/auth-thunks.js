@@ -26,7 +26,7 @@ export const viewProfileThunk = createAsyncThunk("auth/profile", async (username
 });
 
 export const viewProfileByIdThunk = createAsyncThunk("auth/profile", async (id) => {
-  return await authService.viewOtherProfile(id);
+  return await authService.viewOtherProfileById(id);
 });
 
 export const viewTopAgentThunk = createAsyncThunk("auth/topagents", async () => {

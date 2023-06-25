@@ -22,7 +22,6 @@ const Search = () => {
     if (ls) initDBHouses = [...JSON.parse(ls)];
   }
   const [dbHouses, setDBHouses] = useState(initDBHouses);
-  console.log(dbHouses)
   const dispatch = useDispatch();
   const { Formik } = formik;
   const schema = yup.object().shape({
