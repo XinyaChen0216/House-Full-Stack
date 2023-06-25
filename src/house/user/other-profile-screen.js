@@ -85,16 +85,25 @@ function OtherProfileScreen() {
         {reqProfile.role === "seller" && BuyerSellerPublicInfo(reqProfile)}
       </div>
       <div>
-        {currentUser &&
-          !currentUser.following.includes(requestedUser._id) &&
-          currentUser._id !== requestedUser._id && (
-            <button
-              className="btn btn-primary mt-2"
-              onClick={(event) => followUserHandler(event)}
-            >
-              Follow
-            </button>
-          )}
+        {!currentUser && (
+          <button
+            className="btn btn-primary mt-2"
+            onClick={async () => {
+              navigate("/house/login");
+            }}
+          >
+            Follow
+          </button>
+        )}
+        {currentUser && !currentUser.following.includes(requestedUser._id) && (
+          <button
+            className="btn btn-primary mt-2"
+            onClick={(event) => followUserHandler(event)}
+          >
+            Follow
+          </button>
+        )}
+
         {currentUser && currentUser.following.includes(requestedUser._id) && (
           <button
             className="btn btn-primary mt-2"

@@ -4,22 +4,27 @@ import { viewTopAgentThunk } from "../services/auth-thunks";
 import WhoToFollowListItem from "./top-agents-list-item";
 
 const WhoToFollowList = () => {
-  const dispatch = useDispatch();
-  const { agent } = useSelector((state) => state.who);
+    const dispatch = useDispatch();
+    const { agent } = useSelector((state) => state.who);
+    const { currentUser } = useSelector((state) => state.user);
+    
+    useEffect(() => {
+        dispatch(viewTopAgentThunk())}, [])
 
-  useEffect(() => {
-    dispatch(viewTopAgentThunk());
-  }, []);
-
-  return (
-    <ul className="list-group mt-2">
-      <li className="list-group-item">
-        <h3>Top 3 Agents</h3>
-      </li>
-      {agent.map((who) => (
-        <WhoToFollowListItem key={who.username} who={who} />
-      ))}
-    </ul>
-  );
+    return (
+        <ul className="list-group mt-2">
+            <li className="list-group-item">
+                <h3>Top 3 Agents</h3>
+            </li>
+            {
+                agent.map(who =>
+                  <WhoToFollowListItem 
+                  key={who.username}
+                  who={who} 
+                  currentUser = {currentUser}/>
+                )
+            }
+        </ul>
+    );
 };
 export default WhoToFollowList;
