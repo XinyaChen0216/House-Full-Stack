@@ -27,26 +27,28 @@ const HouseList = () => {
   } else generalHouses = totalHouses;
   useEffect(() => {
     dispatch(findHousesThunk());
-    // setTimeout(() => dispatch(findPublicHousesThunk()), 500);
+    dispatch(findPublicHousesThunk());
   }, [reload]);
-  return (
-    <>
-      {loading && <h3>Loading...</h3>}
-      {savedHouses.length > 0 && <h3>Saved Houses:</h3>}
-      <ul className="list-group d-flex flex-row flex-wrap justify-content-start">
-        {savedHouses.map((house) => (
-          <HouseItem house={house} isSaved={true} />
-        ))}
-      </ul>
-      <h3>Available Houses:</h3>
-      <ul className="list-group d-flex flex-row flex-wrap justify-content-start">
-        {generalHouses.map((house) => (
-          //console.log(JSON.stringify(house))
-          <HouseItem house={house} />
-        ))}
-      </ul>
-    </>
-  );
+  if (loading) {
+    return <h3>Loading...</h3>;
+  } else {
+    return (
+      <>
+        {savedHouses.length > 0 && <h3>Saved Houses:</h3>}
+        <ul className="list-group d-flex flex-row flex-wrap justify-content-start">
+          {savedHouses.map((house) => (
+            <HouseItem house={house} isSaved={true} />
+          ))}
+        </ul>
+        <h3>Available Houses:</h3>
+        <ul className="list-group d-flex flex-row flex-wrap justify-content-start">
+          {generalHouses.map((house) => (
+            <HouseItem house={house} />
+          ))}
+        </ul>
+      </>
+    );
+  }
 };
 
 export default HouseList;

@@ -9,6 +9,16 @@ import { createHouseThunk, uploadImagesThunk } from "../services/houses-thunks";
 import { useSelector } from "react-redux";
 
 const PostHouse = () => {
+  const { houses, publicHouses } = useSelector((state) => state.houses);
+  const th = [...houses, ...publicHouses];
+  const addressDB = th.map(
+    (house) =>
+      `${house.address.trim().split(" ").join("").toLowerCase()}${house.city
+        .trim()
+        .split(" ")
+        .join("")
+        .toLowerCase()}${house.state.trim().split(" ").join("").toLowerCase()}`
+  );
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -59,22 +69,43 @@ const PostHouse = () => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                let formData = new FormData();
-                let images = [];
-                for (const image of values.images) {
-                  formData.append("images", image);
-                  images.push(image.name);
+                if (
+                  addressDB.includes(
+                    `${values.address
+                      .trim()
+                      .split(" ")
+                      .join("")
+                      .toLowerCase()}${values.city
+                      .trim()
+                      .split(" ")
+                      .join("")
+                      .toLowerCase()}${values.state
+                      .trim()
+                      .split(" ")
+                      .join("")
+                      .toLowerCase()}`
+                  )
+                ) {
+                  setSubmitting(false);
+                  alert("This house was already posted. Please post another house.");
+                } else {
+                  let formData = new FormData();
+                  let images = [];
+                  for (const image of values.images) {
+                    formData.append("images", image);
+                    images.push(image.name);
+                  }
+                  values.images = images;
+                  values = {
+                    ...values,
+                    agent: currentUser._id,
+                    date_posted: new Date(),
+                  };
+                  dispatch(uploadImagesThunk(formData));
+                  dispatch(createHouseThunk(values));
+                  setSubmitting(false);
+                  handleClose();
                 }
-                values.images = images;
-                values = {
-                  ...values,
-                  agent: currentUser._id,
-                  date_posted: new Date(),
-                };
-                dispatch(uploadImagesThunk(formData));
-                dispatch(createHouseThunk(values));
-                setSubmitting(false);
-                handleClose();
               }, 400);
             }}
           >
