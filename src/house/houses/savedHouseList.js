@@ -19,9 +19,7 @@ const SavedHouseList = () => {
       }
     });
   } else generalHouses = houses;
-  // console.log(houses)
-  // console.log(savedHouses)
-  // console.log(generalHouses)
+  
   useEffect(() => {
     dispatch(findHousesThunk())
   }, [])

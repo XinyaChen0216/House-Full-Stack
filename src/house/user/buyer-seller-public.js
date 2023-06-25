@@ -1,3 +1,5 @@
+import SavedHouseList from "../houses/savedHouseList";
+
 function BuyerSellerPublicInfo(reqProfile) {
   
   return (

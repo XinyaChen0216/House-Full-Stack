@@ -6,6 +6,7 @@ import AgentPublicInfo from "./agent-public";
 import BuyerSellerPublicInfo from "./buyer-seller-public";
 import { updateUserThunk } from "../services/auth-thunks";
 import {RiUserFollowFill} from "react-icons/ri";
+import ProfileScreen from "./profile-screen";
 
 function OtherProfileScreen() {
   const { currentUser, requestedUser } = useSelector((state) => state.user);
@@ -86,13 +87,15 @@ function OtherProfileScreen() {
   useEffect(()=>{
     setReqProfile(requestedUser)
   }, [requestedUser])
-   
+  
+  
   
   return (
+    
     <div>
       <div>
       <h1> {reqProfile.first_name}'s Profile</h1>
-      {( currentUser.following.includes(requestedUser._id) && (<RiUserFollowFill className = "text-primary"/>))}
+      {( currentUser && currentUser.following.includes(requestedUser._id) && (<RiUserFollowFill className = "text-primary"/>))}
       </div>
       <div>
       {reqProfile.role === "agent" && AgentPublicInfo(reqProfile)}
@@ -100,12 +103,16 @@ function OtherProfileScreen() {
       {reqProfile.role === "seller" && BuyerSellerPublicInfo(reqProfile)}
       </div>
       <div>
-      {( !currentUser.following.includes(requestedUser._id) && ( <button className="btn btn-primary mt-2"
+      {( !currentUser && ( <button className="btn btn-primary mt-2"
+        onClick={async() => {
+          navigate("/house/login");}
+        }>Follow</button>))}
+      {( currentUser && !currentUser.following.includes(requestedUser._id) && ( <button className="btn btn-primary mt-2"
         onClick={(event) => 
           followUserHandler(event)
         }>Follow</button>))}
 
-      {( currentUser.following.includes(requestedUser._id) && ( <button className="btn btn-primary mt-2"
+      {( currentUser && currentUser.following.includes(requestedUser._id) && ( <button className="btn btn-primary mt-2"
         onClick={(event) => 
           unFollowUserHandler(event)
         }>Unfollow</button>))}

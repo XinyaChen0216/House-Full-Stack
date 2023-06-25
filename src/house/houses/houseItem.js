@@ -7,8 +7,8 @@ import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { deleteHouse } from "../reducers/houses-reducer";
 import { useSelector } from "react-redux";
-import { updateUserThunk } from "../services/auth-thunks";
-
+import { updateUserThunk, viewProfileByIdThunk } from "../services/auth-thunks";
+import { useNavigate } from "react-router";
 import { BsFillHouseHeartFill, BsFillCalendarWeekFill } from "react-icons/bs";
 import { GrView } from "react-icons/gr";
 import { RxDotFilled } from "react-icons/rx";
@@ -17,8 +17,10 @@ import { Link } from "react-router-dom";
 const HouseItem = ({ house, isSaved = false }) => {
   const [modalShow, setModalShow] = useState(false);
   const [anonymousUserModalShow, setAnonymousUserModalShow] = useState(false);
+  const agent = house.agent;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const deletePostHandler = (event, id) => {
     event.stopPropagation();
     dispatch(deleteHouse(id));
@@ -161,7 +163,12 @@ const HouseItem = ({ house, isSaved = false }) => {
               {house.address}, {house.city}, {house.state} {house.zipcode}
             </div>
             <div className="mb-2">
-              <button type="button" class="btn btn-primary">
+              
+              <button type="button" class="btn btn-primary" onClick={async () => {
+                        await dispatch(viewProfileByIdThunk(agent.id));
+                        let url = '/house/profile/' + agent.username;
+                        navigate(url);
+                    }}>
                 Contact Agent
               </button>
             </div>

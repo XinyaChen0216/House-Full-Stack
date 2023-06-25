@@ -16,7 +16,7 @@ const FollowerList = () => {
 
     console.log("currentUser");
     console.log(currentUser);
-    
+
     if(currentUser && currentUser.followers.length > 0){
         users.forEach(user => {
             if(currentUser.followers.includes(user._id)){
@@ -31,7 +31,7 @@ const FollowerList = () => {
         console.log("followers");
         console.log(followers);
 
-    if(followers.length===0){
+    if(currentUser && followers.length===0){
         return(
             <ul className="list-group mt-2">
                 <li className="list-group-item">
@@ -44,6 +44,8 @@ const FollowerList = () => {
         
             </ul>
         )
+    } else if (!currentUser){
+        return;
     }
 
     return (
