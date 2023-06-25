@@ -168,7 +168,6 @@ export const findPublicHouseById = async (id) => {
     agent: "64938373230f0cc1060ccf65",
     isPublic: true,
   };
-  console.log(modPublicHouse);
   return modPublicHouse;
 };
 

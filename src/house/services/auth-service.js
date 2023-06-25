@@ -5,6 +5,7 @@ const USERS_URL = `${SERVER_API_URL}`;
 const api = axios.create({ withCredentials: true });
 
 export const login = async ({ username, password }) => {
+    if (localStorage) localStorage.clear();
     const response = await api.post(`${USERS_URL}/login`, { username, password });
     return response.data;
 };
@@ -14,7 +15,13 @@ export const findAllUser = async () => {
     return response.data;
 };
 
+export const findUserById = async (id) => {
+    const response = await api.get(`${USERS_URL}/users/${id}`);
+    return response.data;
+};
+
 export const logout = async () => {
+    if (localStorage) localStorage.clear();
     const response = await api.post(`${USERS_URL}/logout`);
     return response.data;
 };
@@ -29,7 +36,7 @@ export const viewOtherProfile = async (username) => {
 };
 
 export const viewOtherProfileById = async (id) => {
-    const response = await api.get(`${USERS_URL}/profile/${id}`);
+    const response = await api.get(`${USERS_URL}/other/profile/${id}`);
     return response.data;
 };
 
@@ -44,13 +51,6 @@ export const updateUser = async (user) => {
 };
 
 export const register = async ({ username, password, email, role }) => {
-    console.log({
-        username: username,
-        password: password,
-        email: email,
-        role: role
-    })
-    console.log(`${USERS_URL}/register`)
     const response = await api.post(`${USERS_URL}/register`, {
         username: username,
         password: password,

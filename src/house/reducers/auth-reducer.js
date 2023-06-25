@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk, logoutThunk, profileThunk, updateUserThunk, registerThunk, viewProfileThunk, viewTopAgentThunk, findAllUserThunk } from "../services/auth-thunks";
+import { loginThunk, logoutThunk, profileThunk, updateUserThunk, registerThunk, viewProfileThunk, findAllUserThunk, findUserByIdThunk, viewProfileByIdThunk } from "../services/auth-thunks";
 
 
 const authSlice = createSlice({
@@ -19,6 +19,9 @@ const authSlice = createSlice({
         [viewProfileThunk.fulfilled]: (state, { payload }) => {
             state.requestedUser = payload;
         },
+        [viewProfileByIdThunk.fulfilled]:(state, { payload }) => {
+            state.requestedUser = payload;
+        },
         [updateUserThunk.fulfilled]: (state, { payload }) => {
             state.currentUser = payload;
         },
@@ -27,6 +30,9 @@ const authSlice = createSlice({
         },
         [findAllUserThunk.fulfilled]: (state, { payload }) => {
             state.users = payload;
+        },
+        [findUserByIdThunk.fulfilled]: (state, { payload }) => {
+            state.currentUser = payload;
         },
     },
 });
