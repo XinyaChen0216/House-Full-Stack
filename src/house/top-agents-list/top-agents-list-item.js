@@ -7,11 +7,13 @@ viewProfileThunk, viewTopAgentThunk
 
 const WhoToFollowListItem = (
     {
-        who
+        who,
+        currentUser
     }
 ) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     return (
         <li className="list-group-item">
             <div className="row">
@@ -21,7 +23,7 @@ const WhoToFollowListItem = (
                 </div>
                 
                 <div className="col-6">
-                
+                { who.username !== currentUser.username &&
                 <button className="col btn btn-primary rounded-pill float-end"
                     
                     onClick={async () => {
@@ -29,6 +31,11 @@ const WhoToFollowListItem = (
                         let url = '/house/profile/' + who.username;
                         navigate(url);
                     }}>View Profile</button>
+                }
+
+                { who.username === currentUser.username &&
+                    <button className="col btn btn-light rounded-pill float-end">Yourself</button>
+                }
                 
                 </div>
             </div>
