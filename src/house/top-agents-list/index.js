@@ -6,6 +6,7 @@ import WhoToFollowListItem from "./top-agents-list-item";
 const WhoToFollowList = () => {
     const dispatch = useDispatch();
     const { agent } = useSelector((state) => state.who);
+    const { currentUser } = useSelector((state) => state.user);
     
     useEffect(() => {
         dispatch(viewTopAgentThunk())}, [])
@@ -19,7 +20,8 @@ const WhoToFollowList = () => {
                 agent.map(who =>
                   <WhoToFollowListItem 
                   key={who.username}
-                  who={who} />
+                  who={who} 
+                  currentUser = {currentUser}/>
                 )
             }
         </ul>

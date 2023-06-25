@@ -8,19 +8,19 @@ const PostedHouseList = () => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let postedHouses = [];
-  let generalHouses = [];
-  if (currentUser && currentUser.posted_houses.length > 0) {
+  if (currentUser) {
     houses.forEach(house => {
-      if (currentUser.posted_houses.includes(house._id)) {
+      if (house.agent.includes(currentUser._id)) {
         postedHouses.push(house);
-      } else {
-        generalHouses.push(house)
-      }
+      } 
     });
-  } else generalHouses = houses;
+  } 
   useEffect(() => {
     dispatch(findHousesThunk())
   }, [])
+  if(postedHouses.length === 0){
+    return <h3>You have not posted any houses yet</h3>
+  } else{
   return (
     <>
       {loading && <h3>Loading...</h3>}
@@ -32,7 +32,7 @@ const PostedHouseList = () => {
       </ul>
       
     </>
-  );
+  );}
 };
 
 export default PostedHouseList;
