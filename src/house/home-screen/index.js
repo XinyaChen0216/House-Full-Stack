@@ -10,7 +10,7 @@ const HomeScreen = () => {
         <>
             <div className="d-flex justify-content-between mb-2">
                 <h1>Home</h1>
-                {currentUser && <h4>Welcome {currentUser.username}</h4>}
+                {currentUser && <span className="mt-2"><h2>Welcome {currentUser.username}</h2></span>}
                 {currentUser && currentUser["role"] === "agent" && <PostHouse />}
             </div>
             <HouseList />
