@@ -13,6 +13,14 @@ function ProfileScreen() {
   const save = async () => {
     await dispatch(updateUserThunk(profile));
   };
+  if(!currentUser){
+    return(
+      <div>
+      <h1>Profile Screen</h1>
+      <h2>Please log in to see your profile</h2>
+      </div>
+    );
+  }
   return (
     <div>
       <h1>Profile Screen</h1>
