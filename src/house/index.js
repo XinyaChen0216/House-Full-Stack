@@ -8,6 +8,7 @@ import whoReducer from "./reducers/who-reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import houseReducer from "./reducers/houses-reducer";
+import adReducer from "./reducers/ad-reducer";
 import authReducer from "./reducers/auth-reducer";
 import RegisterScreen from "./user/register-screen";
 import LoginScreen from "./user/login-screen";
@@ -17,58 +18,62 @@ import thunk from "redux-thunk";
 import { PersistGate } from "redux-persist/integration/react";
 import Search from "./search";
 import FollowerList from "./followers-list";
+import AdvertisementScreen from "./user/advertisement-screen";
 
 const persistConfig = {
-  key: "user",
-  storage,
-  blacklist: ["users"],
+    key: "user",
+    storage,
+    blacklist: ["users"],
 };
 const housePersistConfig = {
-  key: "house",
-  storage,
-  blacklist: ["publicHouses", "houses", "loading", "reload"],
+    key: "house",
+    storage,
+    blacklist: ["publicHouses", "houses", "loading", "reload"],
 };
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 const persistedHouseReducer = persistReducer(housePersistConfig, houseReducer);
 
 const store = configureStore({
-  reducer: {
-    who: whoReducer,
-    houses: persistedHouseReducer,
-    user: persistedAuthReducer,
-  },
-  middleware: [thunk],
+    reducer: {
+        who: whoReducer,
+        houses: persistedHouseReducer,
+        user: persistedAuthReducer,
+        ads: adReducer
+    },
+    middleware: [thunk],
 });
 
 const persistor = persistStore(store);
 
 function House() {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <div>
-          <div className="row">
-            <div className="col-xl-2 col-1">
-              <NavigationSidebar />
-            </div>
-            <div className="col-xl-6 col-lg-7 col-11">
-              <Routes>
-                <Route path="/home" element={<HomeScreen />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/profile" element={<ProfileScreen />} />
-                <Route path="/profile/*" element={<OtherProfileScreen />} />
-                <Route path="/login" element={<LoginScreen />} />
-                <Route path="/register" element={<RegisterScreen />} />
-              </Routes>
-            </div>
-            <div className="col-4 d-none d-md-none d-lg-block">
-              <WhoToFollowList />
-              <FollowerList />
-            </div>
-          </div>
-        </div>
-      </PersistGate>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <div>
+                    <div className="row">
+                        <div className="col-xl-2 col-1">
+                            <NavigationSidebar />
+                        </div>
+                        <div className="col-xl-6 col-lg-7 col-11">
+                            <Routes>
+                                <Route path="/home" element={<HomeScreen />} />
+                                <Route path="/search" element={<Search />} />
+                                <Route path="/profile" element={<ProfileScreen />} />
+                                <Route path="/profile/*" element={<OtherProfileScreen />} />
+                                <Route path="/login" element={<LoginScreen />} />
+                                <Route path="/register" element={<RegisterScreen />} />
+                                <Route path="advertisement" element={<AdvertisementScreen />} />
+
+                            </Routes>
+                        </div>
+                        <div className="col-4 d-none d-md-none d-lg-block">
+                            <WhoToFollowList />
+                            <FollowerList />
+                        </div>
+                    </div>
+                </div>
+            </PersistGate>
+        </Provider>
+    );
 }
 export default House;

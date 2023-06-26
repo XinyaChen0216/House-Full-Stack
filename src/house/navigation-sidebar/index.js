@@ -5,8 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faMagnifyingGlass,
+  faRectangleAd,
   faUser,
+  faRightToBracket,
+  faRegistered,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { useNavigate } from "react-router";
 import { logoutThunk } from "../services/auth-thunks";
 
@@ -18,6 +22,7 @@ const NavigationSidebar = () => {
   const links = [
     { name: "home", icon: faHome },
     { name: "search", icon: faMagnifyingGlass },
+    { name: "advertisement", icon: faRectangleAd },
     { name: "profile", icon: faUser },
   ];
   const { currentUser } = useSelector((state) => state.user);
@@ -42,15 +47,20 @@ const NavigationSidebar = () => {
             } d-flex align-items-center`}
             to="/house/login"
           >
-            {" "}
-            Login{" "}
+            <FontAwesomeIcon icon={faRightToBracket} />{" "}
+            <span className="d-none d-lg-none d-xl-block ms-2">Register</span>
           </Link>
         )}
+
         {!currentUser && (
-          <Link className={`list-group-item text-capitalize ${
-            active === "register" ? "active" : ""
-          } d-flex align-items-center`} to="/house/register">
-            Register
+          <Link
+            className={`list-group-item text-capitalize ${
+              active === "register" ? "active" : ""
+            } d-flex align-items-center`}
+            to="/house/register"
+          >
+            <FontAwesomeIcon icon={faRegistered} />{" "}
+            <span className="d-none d-lg-none d-xl-block ms-2">Register</span>
           </Link>
         )}
         {currentUser && (

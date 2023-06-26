@@ -58,6 +58,8 @@ export const register = async ({ username, password, email, role }) => {
         role: role
     })
     return response.data;
-}
+};
+
+
 
 

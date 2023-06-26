@@ -76,14 +76,14 @@ const PostHouse = () => {
                       .split(" ")
                       .join("")
                       .toLowerCase()}${values.city
-                      .trim()
-                      .split(" ")
-                      .join("")
-                      .toLowerCase()}${values.state
-                      .trim()
-                      .split(" ")
-                      .join("")
-                      .toLowerCase()}`
+                        .trim()
+                        .split(" ")
+                        .join("")
+                        .toLowerCase()}${values.state
+                          .trim()
+                          .split(" ")
+                          .join("")
+                          .toLowerCase()}`
                   )
                 ) {
                   setSubmitting(false);
