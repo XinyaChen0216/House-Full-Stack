@@ -9,7 +9,7 @@ import {
   faUser,
   faRightToBracket,
   faRegistered,
-  faLeft,
+  faLeftLong
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useNavigate } from "react-router";
@@ -66,13 +66,13 @@ const NavigationSidebar = () => {
         )}
         {currentUser && (
           <Link
-            className="list-group-item"
+            className="list-group-item d-flex align-items-center"
             onClick={async () => {
               await dispatch(logoutThunk());
               navigate("/house/login");
             }}
           >
-            <FontAwesomeIcon icon={faLeft} />{" "}
+            <FontAwesomeIcon icon={faLeftLong} />{" "}
             <span className="d-none d-lg-none d-xl-block ms-2">Logout</span>
           </Link>
         )}
