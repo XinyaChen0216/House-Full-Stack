@@ -11,20 +11,6 @@ export const createAdvertisement = async (ad) => {
     return response.data;
 };
 
-export const uploadimages = async (formData) => {
-    const config = {
-        headers: {
-            "content-type": "multipart/form-data",
-        },
-    };
-    const response = await axios.post(
-        `${AD_API}/images/upload`,
-        formData,
-        config
-    );
-    return response.status;
-};
-
 export const findAdvertisements = async () => {
     const response = await axios.get(AD_API);
     const ads = response.data;

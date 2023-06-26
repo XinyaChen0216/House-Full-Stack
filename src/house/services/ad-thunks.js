@@ -23,14 +23,6 @@ export const createAdThunk = createAsyncThunk(
     }
 );
 
-export const uploadImagesThunk = createAsyncThunk(
-    "ads/images/upload",
-    async (formData) => {
-        const res = await service.uploadimages(formData);
-        return res.status;
-    }
-);
-
 export const updateAdThunk = createAsyncThunk(
     "ads/updateAd",
     async (ad) => await service.updateAdvertisement(ad)
