@@ -9,6 +9,7 @@ import {
   faUser,
   faRightToBracket,
   faRegistered,
+  faLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useNavigate } from "react-router";
@@ -48,7 +49,7 @@ const NavigationSidebar = () => {
             to="/house/login"
           >
             <FontAwesomeIcon icon={faRightToBracket} />{" "}
-            <span className="d-none d-lg-none d-xl-block ms-2">Register</span>
+            <span className="d-none d-lg-none d-xl-block ms-2">Login</span>
           </Link>
         )}
 
@@ -71,8 +72,8 @@ const NavigationSidebar = () => {
               navigate("/house/login");
             }}
           >
-            {" "}
-            Logout{" "}
+            <FontAwesomeIcon icon={faLeft} />{" "}
+            <span className="d-none d-lg-none d-xl-block ms-2">Logout</span>
           </Link>
         )}
       </div>
